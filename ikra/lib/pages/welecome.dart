@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../design/textfont.dart';
-import '../design/welecome_sign_login/BG_w.dart';
-import '../design/welecome_sign_login/buttonauth.dart';
-import '../design/welecome_sign_login/logo_ikraW.dart';
+import '../design/welcome_signup_login/BG_w.dart';
+import '../design/welcome_signup_login/buttonauth.dart';
+import '../design/welcome_signup_login/logo_ikraW.dart';
 import '../generated/l10n.dart';
 import '../language_provider.dart';
 
@@ -54,7 +54,9 @@ class Welcome extends StatelessWidget {
                   )))
             ],
           ),
-          const Logo_ikra_M(),
+          const Logo_ikra_M(
+            isWhite: true,
+          ),
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 30),
             child: Column(

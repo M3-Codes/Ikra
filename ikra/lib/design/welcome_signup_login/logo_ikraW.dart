@@ -4,14 +4,16 @@ import 'package:flutter/material.dart';
 
 // ignore: camel_case_types
 class Logo_ikra_M extends StatelessWidget {
-  const Logo_ikra_M({super.key});
+  final bool isWhite; // متغير لتحديد نوع الصورة
+
+  const Logo_ikra_M({super.key, required this.isWhite});
 
   @override
   Widget build(BuildContext context) {
     return Positioned(
-      top: 70,
+      top: isWhite ? 70 : 10,
       child: Image.asset(
-        "images/ikraWhite.png",
+        isWhite ? "images/ikraWhite.png" : "images/ikraBlack.png",
         width: 600, // تحديد عرض الصورة إذا لزم الأمر
         height: 300, // تحديد ارتفاع الصورة إذا لزم الأمر
       ),

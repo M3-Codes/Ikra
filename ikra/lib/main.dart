@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -6,6 +5,8 @@ import 'package:provider/provider.dart';
 
 import 'generated/l10n.dart';
 import 'language_provider.dart';
+import 'pages/login.dart';
+import 'pages/signup.dart';
 import 'pages/welecome.dart';
 
 void main() async {
@@ -32,8 +33,6 @@ class _MyAppState extends State<MyApp> {
   }
 
   @override
-
-
   @override
   Widget build(BuildContext context) {
     if (_isLoading) {
@@ -56,17 +55,15 @@ class _MyAppState extends State<MyApp> {
             supportedLocales: const [
               Locale('en', ''), // English
               Locale('tr', ''), // Turkish
-
             ],
             locale: languageProvider.locale, // Active locale
             navigatorKey: MyApp.navigatorKey,
             debugShowCheckedModeBanner: false,
-            home: 
-                const Welcome(),
+            home: const Login(),
             routes: {
               '/welcome': (context) => const Welcome(),
-              // '/login': (context) => const Login(),
-              // '/signup': (context) => const Signup(),
+              '/login': (context) => const Login(),
+              '/signup': (context) => const Signup(),
               // '/homepage': (context) => const HomePage(),
             },
           );

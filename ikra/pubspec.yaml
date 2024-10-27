@@ -32,6 +32,7 @@ dependencies:
     sdk: flutter
   provider: ^6.1.2
   google_fonts: ^6.2.1
+  modal_progress_hud_nsn: ^0.5.1
   flutter_localizations:
     sdk: flutter
 
@@ -52,6 +53,7 @@ flutter:
 
   assets:
     - images/
+    - images/google.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

@@ -14,13 +14,13 @@ class Divider_login extends StatelessWidget {
       child: Row(
         children: [
           const Expanded(
-              child: Divider(thickness: 1, color: Color(0xFFc10080))),
+              child: Divider(thickness: 1, color: Color(0xFFA28D4F))),
           Text(
             " ${S.of(context).logindivider} ",
-            style: const TextStyle(fontSize: 14, color: Color(0xFFc10080)),
+            style: const TextStyle(fontSize: 14, color: Color(0xFFA28D4F)),
           ),
           const Expanded(
-              child: Divider(thickness: 1, color: Color(0xFFc10080))),
+              child: Divider(thickness: 1, color: Color(0xFFA28D4F))),
         ],
       ),
     );

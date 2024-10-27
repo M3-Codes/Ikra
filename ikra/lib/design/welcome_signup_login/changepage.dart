@@ -22,7 +22,7 @@ class ChangePage extends StatelessWidget {
           TextSpan(
               text: lastText,
               style: const TextStyle(
-                  color: Color(0xFFc10080),
+                  color: Color(0xFFA28D4F),
                   fontSize: 15,
                   fontWeight: FontWeight.bold)),
         ])),
