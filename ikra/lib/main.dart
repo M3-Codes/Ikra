@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:ikra/pages/home.dart';
 import 'package:ikra/pages/splash.dart';
 import 'package:provider/provider.dart';
 import 'generated/l10n.dart';
@@ -58,7 +59,7 @@ class _MyAppState extends State<MyApp> {
             locale: languageProvider.locale, // Active locale
             navigatorKey: MyApp.navigatorKey,
             debugShowCheckedModeBanner: false,
-            home: const Splash(),
+            home: Home(),
             routes: {
               '/welcome': (context) => const Welcome(),
               '/login': (context) => const Login(),
