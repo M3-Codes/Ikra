@@ -1,6 +1,6 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:infinite_carousel/infinite_carousel.dart';
-
+import 'package:iconsax/iconsax.dart';
 import '../design/textfont.dart';
 
 class Home extends StatefulWidget {
@@ -17,6 +17,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    int selectedIndex = 0;
     return Scaffold(
       backgroundColor: const Color(0xFF141B24), // لون الخلفية الداكن
       appBar: AppBar(
@@ -109,35 +110,21 @@ class _HomeState extends State<Home> {
                   left: 0,
                   right: 0,
                   child: SizedBox(
-                    height: 240, // ارتفاع شريط الصور
-                    child: InfiniteCarousel.builder(
+                    height: 320, // ارتفاع شريط الصور
+                    child: CarouselSlider.builder(
                       itemCount: bookCovers.length,
-                      itemExtent: 200,
-                      center: true,
-                      anchor: 0.5,
-                      velocityFactor: 0.5,
-                      loop: false,
                       itemBuilder: (context, index, realIndex) {
                         // حساب التكبير بناءً على موقع العنصر النسبي
-                        double distanceToCenter =
-                            (realIndex - index).abs().toDouble();
-                        double scale = 1.0 - (distanceToCenter * 0.25);
-                        scale = scale.clamp(0.8, 1.2); // التحكم بالحدود
-
-                        return Transform.scale(
-                          scale: scale,
-                          child: Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 15),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              image: DecorationImage(
-                                image: AssetImage(bookCovers[index]),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                        );
+                        final String Image = (bookCovers[index]);
+                        return bulidImage(Image, index);
                       },
+                      options: CarouselOptions(
+                          height: 300, // ارتفاع شريط الصور
+                          enlargeCenterPage: true, // تكبير العنصر في المركز
+                          viewportFraction: 0.6, // نسبة عرض العنصر الواحد
+                          enableInfiniteScroll: true, // تعطيل التكرار اللانهائي
+                          initialPage: 0,
+                          autoPlay: true),
                     ),
                   ),
                 ),
@@ -145,6 +132,66 @@ class _HomeState extends State<Home> {
             ),
           ),
         ],
+      ),
+
+      bottomNavigationBar: SafeArea(
+        child: Container(
+          height: 60,
+          padding: const EdgeInsets.all(6),
+          margin: const EdgeInsets.symmetric(horizontal: 6),
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.2),
+            borderRadius: const BorderRadius.all(Radius.circular(24)),
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              IconButton(
+                icon: const Icon(
+                  Icons.home,
+                  color: Color(0xFFA28D4F),
+                  size: 40,
+                ),
+                onPressed: () {
+                  // الإجراء عند الضغط على زر Home
+                },
+              ),
+              IconButton(
+                icon: const Icon(Icons.menu_book_sharp,
+                    color: Colors.white, size: 40),
+                onPressed: () {
+                  // الإجراء عند الضغط على زر الكتاب
+                },
+              ),
+              IconButton(
+                icon: const Icon(Icons.bookmark, color: Colors.white, size: 40),
+                onPressed: () {
+                  // الإجراء عند الضغط على زر المفضلة
+                },
+              ),
+              IconButton(
+                icon: const Icon(
+                  Icons.info_outline,
+                  color: Colors.white,
+                  size: 40,
+                ),
+                onPressed: () {
+                  // الإجراء عند الضغط على زر حول
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget bulidImage(String image, int index) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 8),
+      child: Image.asset(
+        image,
+        fit: BoxFit.cover,
       ),
     );
   }

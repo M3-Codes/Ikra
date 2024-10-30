@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ikra/design/welcome_signup_login/BG_w.dart';
 import 'package:ikra/design/welcome_signup_login/logo_ikraW.dart';
+import 'package:ikra/pages/home.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import '../design/welcome_signup_login/BG_text.dart';
 import '../design/welcome_signup_login/buttonauth.dart';
@@ -86,15 +87,10 @@ class _LoginState extends State<Login> {
                               colorfont:
                                   const Color.fromARGB(255, 255, 255, 255),
                               onPressed: () {
-                                if (formState.currentState!.validate()) {
-                                  setState(() {
-                                    _loading = true;
-                                  });
-                                  // تنفيذ إجراءات تسجيل الدخول بدون Firebase
-                                  setState(() {
-                                    _loading = false;
-                                  });
-                                }
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Home()));
                               },
                             ),
                             const SizedBox(height: 14),

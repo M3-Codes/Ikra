@@ -59,7 +59,7 @@ class _MyAppState extends State<MyApp> {
             locale: languageProvider.locale, // Active locale
             navigatorKey: MyApp.navigatorKey,
             debugShowCheckedModeBanner: false,
-            home: Home(),
+            home: const Splash(),
             routes: {
               '/welcome': (context) => const Welcome(),
               '/login': (context) => const Login(),
