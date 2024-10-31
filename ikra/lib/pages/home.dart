@@ -1,10 +1,13 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:ikra/design/textfont.dart';
 import '../design/home/background box.dart';
 import '../design/home/searchbox.dart';
 import '../design/iconbar.dart';
 
 class Home extends StatefulWidget {
+  const Home({super.key});
+
   @override
   State<Home> createState() => _HomeState();
 }
@@ -33,12 +36,10 @@ class _HomeState extends State<Home> {
                 height: 50,
               ),
               const SizedBox(height: 8),
-              const Text(
+              const Textdesign(
                 "Welcome Back, Mert",
-                style: TextStyle(
-                  fontSize: 24,
-                  color: Colors.white,
-                ),
+                24,
+                color: Colors.white,
               ),
             ],
           ),
@@ -83,7 +84,9 @@ class _HomeState extends State<Home> {
           ),
         ],
       ),
-      bottomNavigationBar: const Iconbar(),
+      bottomNavigationBar: const Iconbar(
+        index: 1,
+      ),
     );
   }
 

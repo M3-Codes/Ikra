@@ -11,7 +11,7 @@ class Textdesign extends StatelessWidget {
   const Textdesign(
     this.text,
     this.fontsize, {
-    this.color=Colors.black, 
+    this.color = Colors.black,
     this.fontWeight = FontWeight.normal,
     this.align = TextAlign.left,
     super.key,
@@ -26,7 +26,7 @@ class Textdesign extends StatelessWidget {
         style: GoogleFonts.rubik(
           textStyle: TextStyle(
             fontSize: fontsize,
-            fontWeight: fontWeight, 
+            fontWeight: fontWeight,
             color: color,
           ),
         ),

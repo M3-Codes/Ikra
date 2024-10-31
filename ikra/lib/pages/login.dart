@@ -23,7 +23,7 @@ class _LoginState extends State<Login> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   GlobalKey<FormState> formState = GlobalKey<FormState>();
-  bool _loading = false;
+  final bool _loading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +90,7 @@ class _LoginState extends State<Login> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => Home()));
+                                        builder: (context) => const Home()));
                               },
                             ),
                             const SizedBox(height: 14),
