@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ikra/design/iconbar.dart';
 import 'package:ikra/design/textfont.dart';
+import 'package:ikra/pages/showBook.dart';
 
 class ViewPage extends StatefulWidget {
   const ViewPage({super.key});
@@ -16,19 +17,32 @@ class _ViewPageState extends State<ViewPage> {
     {
       "title": "All Fours",
       "author": "Miranda July",
-      "image": "images/book1.jpg"
+      "image": "images/book1.jpg",
+      "releaseDate": "14/05/2024",
+      "category": "Literary Fiction",
+      "summary":
+          "The plot of 'All Fours' by Miranda July follows a semi-famous artist who embarks on a spontaneous cross-country road trip from Los Angeles to New York. Along the way, she makes an unexpected stop at a nondescript motel, where she begins a journey of self-discovery and reinvention."
     },
     {
       "title": "The Secret History",
-      "author": "Alfred A. Knopf",
-      "image": "images/book2.jpg"
+      "author": "Donna Tartt",
+      "image": "images/book2.jpg",
+      "releaseDate": "16/09/1992",
+      "category": "Mystery, Psychological Thriller",
+      "summary":
+          "In 'The Secret History,' a group of eccentric and secretive students at an elite college in Vermont become entangled in a murder mystery that tests the boundaries of friendship and morality. Donna Tartt’s novel delves into themes of obsession, guilt, and the human psyche."
     },
     {
       "title": "Buddenbrooks",
       "author": "Thomas Mann",
-      "image": "images/book3.jpg"
+      "image": "images/book3.jpg",
+      "releaseDate": "1901",
+      "category": "Historical Fiction",
+      "summary":
+          "'Buddenbrooks' is a novel about the decline of a wealthy German merchant family over the course of four generations. Thomas Mann’s exploration of family dynamics, societal changes, and personal aspirations offers a richly detailed view of 19th-century Europe."
     },
   ];
+
   final List<Map<String, String>> authors = [
     {"name": "James Patterson", "image": "images/author1.png"},
     {"name": "Stephen King", "image": "images/author2.png"},
@@ -97,8 +111,14 @@ class _ViewPageState extends State<ViewPage> {
                           itemBuilder: (context, index) {
                             if (isBooksSelected) {
                               final book = books[index];
-                              return _buildBookItem(book["title"]!,
-                                  book["author"]!, book["image"]!);
+                              return _buildBookItem(
+                                book["title"]!,
+                                book["author"]!,
+                                book["image"]!,
+                                book["releaseDate"]!,
+                                book["category"]!,
+                                book["summary"]!,
+                              );
                             } else {
                               final author = authors[index];
                               return _buildAuthorItem(
@@ -202,7 +222,8 @@ class _ViewPageState extends State<ViewPage> {
     );
   }
 
-  Widget _buildBookItem(String title, String author, String imagePath) {
+  Widget _buildBookItem(String title, String author, String imagePath,
+      String releaseDate, String category, String summary) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 5),
       padding: const EdgeInsets.all(10),
@@ -214,7 +235,7 @@ class _ViewPageState extends State<ViewPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(1),
+            borderRadius: BorderRadius.circular(8),
             child: Image.asset(
               imagePath,
               width: 120,
@@ -235,6 +256,7 @@ class _ViewPageState extends State<ViewPage> {
                     color: Colors.black,
                   ),
                 ),
+                const SizedBox(height: 8),
                 Text(
                   author,
                   style: const TextStyle(
@@ -242,29 +264,43 @@ class _ViewPageState extends State<ViewPage> {
                     color: Colors.black54,
                   ),
                 ),
-              ],
-            ),
-          ),
-          // لملء المساحة المتبقية ودفع الزر للأسفل
-          Align(
-            alignment: Alignment.bottomLeft,
-            child: ElevatedButton(
-              onPressed: () {
-                // قم بإضافة الإجراء هنا عند الضغط على زر "Show"
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFFA28D4F),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+                const SizedBox(height: 16),
+                Align(
+                  alignment: Alignment.bottomLeft,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Showbook(
+                            title: title,
+                            author: author,
+                            imagePath: imagePath,
+                            releaseDate: releaseDate,
+                            category: category,
+                            summary: summary,
+                          ),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFFA28D4F),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 8),
+                    ),
+                    child: const Text(
+                      "Show",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
                 ),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-              ),
-              child: const Textdesign(
-                "Show",
-                16,
-                color: Colors.black,
-              ),
+              ],
             ),
           ),
         ],

@@ -54,9 +54,8 @@ class Iconbar extends StatelessWidget {
 
     return SafeArea(
       child: Container(
-        height: 60,
-        padding: const EdgeInsets.all(6),
-        margin: const EdgeInsets.symmetric(horizontal: 6),
+        height: 70,
+        padding: const EdgeInsets.all(4),
         decoration: BoxDecoration(
           color: Colors.grey.withOpacity(0.3),
           borderRadius: const BorderRadius.all(Radius.circular(24)),
