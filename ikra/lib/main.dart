@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:ikra/pages/bookData.dart';
 import 'package:ikra/pages/splash.dart';
 import 'package:ikra/pages/view.dart';
 import 'package:provider/provider.dart';
@@ -41,6 +42,7 @@ class _MyAppState extends State<MyApp> {
 
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(create: (_) => FavoriteData()),
         ChangeNotifierProvider(create: (_) => LanguageProvider()),
       ],
       child: Consumer<LanguageProvider>(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ikra/pages/favPage.dart';
 
 import '../pages/home.dart';
 import '../pages/view.dart';
@@ -36,7 +37,7 @@ class Iconbar extends StatelessWidget {
             page = const ViewPage(); // صفحة الكتب
             break;
           case 3:
-            page = const Home(); // صفحة المفضلة
+            page = const Favpage(); // صفحة المفضلة
             break;
           case 4:
             page = const Home(); // صفحة حول

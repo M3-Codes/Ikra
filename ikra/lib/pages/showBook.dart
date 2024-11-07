@@ -1,29 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:ikra/design/iconbar.dart';
+import 'package:provider/provider.dart';
+import 'bookData.dart'; // Kitap modelinizi import edin
 
 class Showbook extends StatefulWidget {
-  final String title;
-  final String author;
-  final String imagePath;
-  final String releaseDate;
-  final String category;
-  final String summary;
+  final Book book; // Kitap nesnesi direkt olarak alınıyor.
 
-  const Showbook({
-    Key? key,
-    required this.title,
-    required this.author,
-    required this.imagePath,
-    required this.releaseDate,
-    required this.category,
-    required this.summary,
-  }) : super(key: key);
+  const Showbook({Key? key, required this.book}) : super(key: key);
 
   @override
   State<Showbook> createState() => _ShowbookState();
 }
 
 class _ShowbookState extends State<Showbook> {
+  late Book book;
+
+  @override
+  void initState() {
+    super.initState();
+    book = widget.book;
+
+    final favoriteData = context.read<FavoriteData>();
+    if (favoriteData.isFavorite(book)) {
+      book.isFavorite = true;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,8 +51,8 @@ class _ShowbookState extends State<Showbook> {
                   decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(60),
-                      topRight: Radius.circular(60),
+                      topLeft: Radius.circular(50),
+                      topRight: Radius.circular(50),
                       bottomLeft: Radius.circular(20),
                       bottomRight: Radius.circular(20),
                     ),
@@ -60,12 +62,12 @@ class _ShowbookState extends State<Showbook> {
                     children: [
                       const SizedBox(height: 16),
                       Image.asset(
-                        widget.imagePath,
+                        book.imagePath,
                         height: 200,
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        widget.title,
+                        book.title,
                         style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -73,7 +75,7 @@ class _ShowbookState extends State<Showbook> {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        widget.author,
+                        book.author,
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w400,
@@ -81,7 +83,7 @@ class _ShowbookState extends State<Showbook> {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        'Release date: ${widget.releaseDate}',
+                        'Release date: ${book.releaseDate}',
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.grey[700],
@@ -89,7 +91,7 @@ class _ShowbookState extends State<Showbook> {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        'Category: ${widget.category}',
+                        'Category: ${book.category}',
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.grey[700],
@@ -99,7 +101,7 @@ class _ShowbookState extends State<Showbook> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: Text(
-                          widget.summary,
+                          book.summary,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 16,
@@ -107,18 +109,30 @@ class _ShowbookState extends State<Showbook> {
                           ),
                         ),
                       ),
-                      // const Spacer(),
                       const SizedBox(height: 16),
                       IconButton(
-                        icon: const Icon(
-                          Icons.bookmark_add_outlined,
+                        icon: Icon(
+                          book.isFavorite
+                              ? Icons.bookmark
+                              : Icons.bookmark_add_outlined,
                           size: 45,
-                          color: Colors.black87,
+                          color: book.isFavorite
+                              ? const Color.fromARGB(255, 144, 39, 32)
+                              : Colors.black87,
                         ),
                         onPressed: () {
-                          // Kitabı eklemek için gerekli fonksiyonu buraya yazabilirsiniz
                           setState(() {
-                            // Durum güncelleme işlemi buraya
+                            if (book.isFavorite) {
+                              context
+                                  .read<FavoriteData>()
+                                  .removeFavoriteBook(book);
+                              book.isFavorite = false;
+                            } else {
+                              context
+                                  .read<FavoriteData>()
+                                  .addFavoriteBook(book);
+                              book.isFavorite = true;
+                            }
                           });
                         },
                       ),
@@ -133,9 +147,7 @@ class _ShowbookState extends State<Showbook> {
             bottom: 0,
             left: 0,
             right: 0,
-            child: Iconbar(
-              index: 2,
-            ),
+            child: Iconbar(index: 2),
           ),
         ],
       ),

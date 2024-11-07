@@ -1,20 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:ikra/design/iconbar.dart';
+import 'package:ikra/pages/bookData.dart';
 
 class ShowAuthor extends StatefulWidget {
-  final String name;
-  final String imagePath;
-  final String birthDate;
-  final String nationality;
-  final String biography;
+  final Author author;
 
   const ShowAuthor({
     Key? key,
-    required this.name,
-    required this.imagePath,
-    required this.birthDate,
-    required this.nationality,
-    required this.biography,
+    required this.author,
   }) : super(key: key);
 
   @override
@@ -47,8 +40,8 @@ class _ShowAuthorState extends State<ShowAuthor> {
                   decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(60),
-                      topRight: Radius.circular(60),
+                      topLeft: Radius.circular(50),
+                      topRight: Radius.circular(50),
                       bottomLeft: Radius.circular(20),
                       bottomRight: Radius.circular(20),
                     ),
@@ -58,14 +51,14 @@ class _ShowAuthorState extends State<ShowAuthor> {
                     children: [
                       const SizedBox(height: 28),
                       Image.asset(
-                        widget.imagePath,
+                        widget.author.image,
                         width: 120,
                         height: 180,
-                        fit: BoxFit.fitWidth,
+                        fit: BoxFit.fitHeight,
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        widget.name,
+                        widget.author.name,
                         style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
@@ -73,7 +66,7 @@ class _ShowAuthorState extends State<ShowAuthor> {
                       ),
                       const SizedBox(height: 20),
                       Text(
-                        'Birth Date: ${widget.birthDate}',
+                        'Birth Date: ${widget.author.birthDate}',
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.grey[700],
@@ -81,7 +74,7 @@ class _ShowAuthorState extends State<ShowAuthor> {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        'Nationality: ${widget.nationality}',
+                        'Nationality: ${widget.author.nationality}',
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.grey[700],
@@ -91,7 +84,7 @@ class _ShowAuthorState extends State<ShowAuthor> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: Text(
-                          widget.biography,
+                          widget.author.biography,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 16,
@@ -107,13 +100,7 @@ class _ShowAuthorState extends State<ShowAuthor> {
             ],
           ),
           const Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: Iconbar(
-              index: 2,
-            ),
-          ),
+              bottom: 0, left: 0, right: 0, child: Iconbar(index: 2))
         ],
       ),
     );
