@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:ikra/design/iconbar.dart';
 import 'package:ikra/design/textfont.dart';
+import 'package:ikra/Db/bookData.dart';
+import 'package:ikra/pages/showAuthor.dart';
+import 'package:ikra/pages/showBook.dart';
 
 class ViewPage extends StatefulWidget {
   const ViewPage({super.key});
@@ -12,28 +15,6 @@ class ViewPage extends StatefulWidget {
 class _ViewPageState extends State<ViewPage> {
   bool isBooksSelected = true;
 
-  final List<Map<String, String>> books = [
-    {
-      "title": "All Fours",
-      "author": "Miranda July",
-      "image": "images/book1.jpg"
-    },
-    {
-      "title": "The Secret History",
-      "author": "Alfred A. Knopf",
-      "image": "images/book2.jpg"
-    },
-    {
-      "title": "Buddenbrooks",
-      "author": "Thomas Mann",
-      "image": "images/book3.jpg"
-    },
-  ];
-  final List<Map<String, String>> authors = [
-    {"name": "James Patterson", "image": "images/author1.png"},
-    {"name": "Stephen King", "image": "images/author2.png"},
-    {"name": "Chuck Palahniuk", "image": "images/author3.png"},
-  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,10 +26,9 @@ class _ViewPageState extends State<ViewPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SizedBox(height: 8),
-              Textdesign(
+              Text(
                 'Recommended ${isBooksSelected ? "Books" : "Authors"}',
-                18,
-                color: Colors.white,
+                style: const TextStyle(fontSize: 18, color: Colors.white),
               ),
             ],
           ),
@@ -63,14 +43,14 @@ class _ViewPageState extends State<ViewPage> {
                   decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(60),
-                      topRight: Radius.circular(60),
+                      topLeft: Radius.circular(40),
+                      topRight: Radius.circular(40),
                       bottomLeft: Radius.circular(20),
                       bottomRight: Radius.circular(20),
                     ),
                   ),
                   padding: const EdgeInsets.all(20),
-                  margin: const EdgeInsets.only(bottom: 0), // مساحة تحتية
+                  margin: const EdgeInsets.only(bottom: 0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -92,21 +72,20 @@ class _ViewPageState extends State<ViewPage> {
                       const SizedBox(height: 20),
                       Expanded(
                         child: ListView.builder(
-                          itemCount:
-                              isBooksSelected ? books.length : authors.length,
+                          itemCount: isBooksSelected
+                              ? BookData.books.length
+                              : BookData.authors.length,
                           itemBuilder: (context, index) {
                             if (isBooksSelected) {
-                              final book = books[index];
-                              return _buildBookItem(book["title"]!,
-                                  book["author"]!, book["image"]!);
+                              final book = BookData.books[index];
+                              return _buildBookItem(book);
                             } else {
-                              final author = authors[index];
-                              return _buildAuthorItem(
-                                  author["name"]!, author["image"]!);
+                              final author = BookData.authors[index];
+                              return _buildAuthorItem(author);
                             }
                           },
                         ),
-                      ), // Add any other content here
+                      ),
                     ],
                   ),
                 ),
@@ -131,7 +110,7 @@ class _ViewPageState extends State<ViewPage> {
         padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 6),
         margin: const EdgeInsets.all(8),
         decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFF141B24) : Colors.grey,
+          color: isSelected ? const Color(0xFF141B24) : Colors.grey[300],
           borderRadius: BorderRadius.circular(16),
         ),
         child: Text(
@@ -145,7 +124,7 @@ class _ViewPageState extends State<ViewPage> {
     );
   }
 
-  Widget _buildAuthorItem(String name, String imagePath) {
+  Widget _buildAuthorItem(Author author) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
       padding: const EdgeInsets.all(10),
@@ -159,7 +138,7 @@ class _ViewPageState extends State<ViewPage> {
           ClipRRect(
             borderRadius: BorderRadius.circular(2),
             child: Image.asset(
-              imagePath,
+              author.image,
               width: 120,
               height: 180,
               fit: BoxFit.fill,
@@ -168,7 +147,7 @@ class _ViewPageState extends State<ViewPage> {
           const SizedBox(width: 16),
           Expanded(
             child: Text(
-              name,
+              author.name,
               style: const TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
@@ -180,7 +159,12 @@ class _ViewPageState extends State<ViewPage> {
             alignment: Alignment.bottomLeft,
             child: ElevatedButton(
               onPressed: () {
-                // قم بإضافة الإجراء هنا عند الضغط على زر "Show"
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ShowAuthor(author: author),
+                  ),
+                );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFFA28D4F),
@@ -190,10 +174,12 @@ class _ViewPageState extends State<ViewPage> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
               ),
-              child: const Textdesign(
+              child: const Text(
                 "Show",
-                16,
-                color: Colors.black,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                ),
               ),
             ),
           ),
@@ -202,7 +188,7 @@ class _ViewPageState extends State<ViewPage> {
     );
   }
 
-  Widget _buildBookItem(String title, String author, String imagePath) {
+  Widget _buildBookItem(Book book) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 5),
       padding: const EdgeInsets.all(10),
@@ -214,9 +200,9 @@ class _ViewPageState extends State<ViewPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(1),
+            borderRadius: BorderRadius.circular(8),
             child: Image.asset(
-              imagePath,
+              book.imagePath,
               width: 120,
               height: 180,
               fit: BoxFit.fill,
@@ -228,43 +214,51 @@ class _ViewPageState extends State<ViewPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  title,
+                  book.title,
                   style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                   ),
                 ),
+                const SizedBox(height: 8),
                 Text(
-                  author,
+                  book.author,
                   style: const TextStyle(
                     fontSize: 14,
                     color: Colors.black54,
                   ),
                 ),
-              ],
-            ),
-          ),
-          // لملء المساحة المتبقية ودفع الزر للأسفل
-          Align(
-            alignment: Alignment.bottomLeft,
-            child: ElevatedButton(
-              onPressed: () {
-                // قم بإضافة الإجراء هنا عند الضغط على زر "Show"
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color(0xFFA28D4F),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
+                const SizedBox(height: 16),
+                Align(
+                  alignment: Alignment.bottomLeft,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Showbook(book: book),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFFA28D4F),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 8),
+                    ),
+                    child: const Text(
+                      "Show",
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
                 ),
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-              ),
-              child: const Textdesign(
-                "Show",
-                16,
-                color: Colors.black,
-              ),
+              ],
             ),
           ),
         ],

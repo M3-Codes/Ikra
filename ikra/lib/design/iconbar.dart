@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:icons_plus/icons_plus.dart';
+=======
+import 'package:ikra/pages/favPage.dart';
+
+>>>>>>> 2e8733e662cb09f4dbadc806a3df762d8d4a326c
 import '../pages/home.dart';
 import '../pages/view.dart';
 
@@ -36,7 +41,7 @@ class Iconbar extends StatelessWidget {
             page = const ViewPage(); // صفحة الكتب
             break;
           case 3:
-            page = const Home(); // صفحة المفضلة
+            page = const Favpage(); // صفحة المفضلة
             break;
           case 4:
             page = const Home(); // صفحة حول
@@ -54,9 +59,8 @@ class Iconbar extends StatelessWidget {
 
     return SafeArea(
       child: Container(
-        height: 60,
-        padding: const EdgeInsets.all(6),
-        margin: const EdgeInsets.symmetric(horizontal: 6),
+        height: 70,
+        padding: const EdgeInsets.all(4),
         decoration: BoxDecoration(
           color: Colors.grey.withOpacity(0.3),
           borderRadius: const BorderRadius.all(Radius.circular(24)),

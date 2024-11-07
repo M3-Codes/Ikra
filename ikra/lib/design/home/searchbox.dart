@@ -18,7 +18,8 @@ class searchbox extends StatelessWidget {
           suffixIcon: const Icon(Icons.search_rounded, color: Colors.grey),
           filled: true,
           fillColor: Colors.white.withOpacity(0.2), // شفافية للخلفية
-          contentPadding: const EdgeInsets.symmetric(vertical: 15),
+          contentPadding:
+              const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(25),
             borderSide: BorderSide.none,
