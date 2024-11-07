@@ -34,8 +34,8 @@ class Favpage extends StatelessWidget {
                       decoration: const BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(50),
-                          topRight: Radius.circular(50),
+                          topLeft: Radius.circular(40),
+                          topRight: Radius.circular(40),
                           bottomLeft: Radius.circular(20),
                           bottomRight: Radius.circular(20),
                         ),
@@ -49,7 +49,7 @@ class Favpage extends StatelessWidget {
                                 decoration: BoxDecoration(
                                   color:
                                       const Color.fromARGB(191, 224, 224, 224),
-                                  borderRadius: BorderRadius.circular(20),
+                                  borderRadius: BorderRadius.circular(25),
                                 ),
                                 child: const Column(
                                   mainAxisSize: MainAxisSize.min,

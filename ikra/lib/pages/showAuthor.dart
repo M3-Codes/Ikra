@@ -40,8 +40,8 @@ class _ShowAuthorState extends State<ShowAuthor> {
                   decoration: const BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(50),
-                      topRight: Radius.circular(50),
+                      topLeft: Radius.circular(40),
+                      topRight: Radius.circular(40),
                       bottomLeft: Radius.circular(20),
                       bottomRight: Radius.circular(20),
                     ),
@@ -100,7 +100,7 @@ class _ShowAuthorState extends State<ShowAuthor> {
             ],
           ),
           const Positioned(
-              bottom: 0, left: 0, right: 0, child: Iconbar(index: 2))
+              bottom: 0, left: 0, right: 0, child: Iconbar(index: 0))
         ],
       ),
     );
