@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ikra/design/iconbar.dart';
 import 'package:ikra/design/textfont.dart';
+import 'package:ikra/pages/showAuthor.dart';
 import 'package:ikra/pages/showBook.dart';
 
 class ViewPage extends StatefulWidget {
@@ -44,10 +45,32 @@ class _ViewPageState extends State<ViewPage> {
   ];
 
   final List<Map<String, String>> authors = [
-    {"name": "James Patterson", "image": "images/author1.png"},
-    {"name": "Stephen King", "image": "images/author2.png"},
-    {"name": "Chuck Palahniuk", "image": "images/author3.png"},
+    {
+      "name": "James Patterson",
+      "image": "images/author1.png",
+      "birthDate": "March 22, 1947",
+      "nationality": "American",
+      "biography":
+          "James Patterson is an American author and philanthropist known for his thrillers and crime novels. He has authored numerous bestselling books, including the Alex Cross and Women's Murder Club series."
+    },
+    {
+      "name": "Stephen King",
+      "image": "images/author2.png",
+      "birthDate": "September 21, 1947",
+      "nationality": "American",
+      "biography":
+          "Stephen King is an American author of horror, supernatural fiction, suspense, and fantasy novels. His books have sold over 350 million copies, many of which have been adapted into films, television series, and miniseries."
+    },
+    {
+      "name": "Chuck Palahniuk",
+      "image": "images/author3.png",
+      "birthDate": "February 21, 1962",
+      "nationality": "American",
+      "biography":
+          "Chuck Palahniuk is an American novelist and freelance journalist, known for his transgressive fiction novels. He is the author of 'Fight Club', which was adapted into a popular film in 1999."
+    },
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -122,7 +145,13 @@ class _ViewPageState extends State<ViewPage> {
                             } else {
                               final author = authors[index];
                               return _buildAuthorItem(
-                                  author["name"]!, author["image"]!);
+                                context,
+                                author["name"]!,
+                                author["image"]!,
+                                author["birthDate"]!,
+                                author["nationality"]!,
+                                author["biography"]!,
+                              );
                             }
                           },
                         ),
@@ -165,7 +194,8 @@ class _ViewPageState extends State<ViewPage> {
     );
   }
 
-  Widget _buildAuthorItem(String name, String imagePath) {
+  Widget _buildAuthorItem(BuildContext context, String name, String imagePath,
+      String birthDate, String nationality, String biography) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 8),
       padding: const EdgeInsets.all(10),
@@ -200,7 +230,18 @@ class _ViewPageState extends State<ViewPage> {
             alignment: Alignment.bottomLeft,
             child: ElevatedButton(
               onPressed: () {
-                // قم بإضافة الإجراء هنا عند الضغط على زر "Show"
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ShowAuthor(
+                      name: name,
+                      imagePath: imagePath,
+                      birthDate: birthDate,
+                      nationality: nationality,
+                      biography: biography,
+                    ),
+                  ),
+                );
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFFA28D4F),
@@ -210,10 +251,12 @@ class _ViewPageState extends State<ViewPage> {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
               ),
-              child: const Textdesign(
+              child: const Text(
                 "Show",
-                16,
-                color: Colors.black,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                ),
               ),
             ),
           ),
@@ -269,7 +312,7 @@ class _ViewPageState extends State<ViewPage> {
                   alignment: Alignment.bottomLeft,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.pushReplacement(
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => Showbook(

@@ -1,29 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:ikra/design/iconbar.dart';
 
-class Showbook extends StatefulWidget {
-  final String title;
-  final String author;
+class ShowAuthor extends StatefulWidget {
+  final String name;
   final String imagePath;
-  final String releaseDate;
-  final String category;
-  final String summary;
+  final String birthDate;
+  final String nationality;
+  final String biography;
 
-  const Showbook({
+  const ShowAuthor({
     Key? key,
-    required this.title,
-    required this.author,
+    required this.name,
     required this.imagePath,
-    required this.releaseDate,
-    required this.category,
-    required this.summary,
+    required this.birthDate,
+    required this.nationality,
+    required this.biography,
   }) : super(key: key);
 
   @override
-  State<Showbook> createState() => _ShowbookState();
+  State<ShowAuthor> createState() => _ShowAuthorState();
 }
 
-class _ShowbookState extends State<Showbook> {
+class _ShowAuthorState extends State<ShowAuthor> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,7 +30,7 @@ class _ShowbookState extends State<Showbook> {
         backgroundColor: Colors.black87,
         elevation: 0,
         title: const Text(
-          'Recommended books',
+          'Recommended author',
           style: TextStyle(
             color: Colors.white,
             fontSize: 18,
@@ -58,30 +56,24 @@ class _ShowbookState extends State<Showbook> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 28),
                       Image.asset(
                         widget.imagePath,
-                        height: 200,
+                        width: 120,
+                        height: 180,
+                        fit: BoxFit.fitWidth,
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        widget.title,
+                        widget.name,
                         style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 20),
                       Text(
-                        widget.author,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w400,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        'Release date: ${widget.releaseDate}',
+                        'Birth Date: ${widget.birthDate}',
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.grey[700],
@@ -89,7 +81,7 @@ class _ShowbookState extends State<Showbook> {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        'Category: ${widget.category}',
+                        'Nationality: ${widget.nationality}',
                         style: TextStyle(
                           fontSize: 16,
                           color: Colors.grey[700],
@@ -99,28 +91,13 @@ class _ShowbookState extends State<Showbook> {
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
                         child: Text(
-                          widget.summary,
+                          widget.biography,
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 16,
                             color: Colors.grey[800],
                           ),
                         ),
-                      ),
-                      // const Spacer(),
-                      const SizedBox(height: 16),
-                      IconButton(
-                        icon: const Icon(
-                          Icons.bookmark_add_outlined,
-                          size: 45,
-                          color: Colors.black87,
-                        ),
-                        onPressed: () {
-                          // Kitabı eklemek için gerekli fonksiyonu buraya yazabilirsiniz
-                          setState(() {
-                            // Durum güncelleme işlemi buraya
-                          });
-                        },
                       ),
                       const SizedBox(height: 16),
                     ],
