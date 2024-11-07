@@ -102,7 +102,6 @@ class FavoriteData with ChangeNotifier {
 
   void addFavoriteBook(Book book) {
     if (!_favoriteBooks.contains(book)) {
-      // Tekrar eklenmeyi önlemek için kontrol
       _favoriteBooks.add(book);
       book.isFavorite = true;
       notifyListeners();

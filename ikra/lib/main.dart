@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:ikra/pages/bookData.dart';
+import 'package:ikra/Db/bookData.dart';
 import 'package:ikra/pages/splash.dart';
 import 'package:ikra/pages/view.dart';
 import 'package:provider/provider.dart';

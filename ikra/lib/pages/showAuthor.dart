@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ikra/design/iconbar.dart';
-import 'package:ikra/pages/bookData.dart';
+import 'package:ikra/Db/bookData.dart';
 
 class ShowAuthor extends StatefulWidget {
   final Author author;

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:ikra/design/iconbar.dart';
 import 'package:provider/provider.dart';
-import 'bookData.dart'; // Kitap modelinizi import edin
+import '../Db/bookData.dart';
 
 class Showbook extends StatefulWidget {
-  final Book book; // Kitap nesnesi direkt olarak alınıyor.
+  final Book book;
 
   const Showbook({Key? key, required this.book}) : super(key: key);
 
@@ -147,7 +147,7 @@ class _ShowbookState extends State<Showbook> {
             bottom: 0,
             left: 0,
             right: 0,
-            child: Iconbar(index: 2),
+            child: Iconbar(index: 0),
           ),
         ],
       ),

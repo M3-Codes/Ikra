@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ikra/design/iconbar.dart';
 import 'package:ikra/design/textfont.dart';
-import 'package:ikra/pages/bookData.dart';
+import 'package:ikra/Db/bookData.dart';
 import 'package:ikra/pages/showAuthor.dart';
 import 'package:ikra/pages/showBook.dart';
 

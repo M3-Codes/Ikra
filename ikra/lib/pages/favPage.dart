@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ikra/pages/bookData.dart';
+import 'package:ikra/Db/bookData.dart';
 import 'package:provider/provider.dart';
-import 'package:ikra/pages/showBook.dart'; // Kitap detay sayfası
+import 'package:ikra/pages/showBook.dart';
 import 'package:ikra/design/iconbar.dart';
 
 class Favpage extends StatelessWidget {
@@ -41,92 +41,128 @@ class Favpage extends StatelessWidget {
                         ),
                       ),
                       padding: const EdgeInsets.all(20),
-                      child: ListView.builder(
-                        itemCount: favoriteData.favoriteBooks.length,
-                        itemBuilder: (context, index) {
-                          final book = favoriteData.favoriteBooks[index];
-
-                          return Container(
-                            margin: const EdgeInsets.symmetric(vertical: 5),
-                            padding: const EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              color: Colors.grey[200],
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(8),
-                                  child: Image.asset(
-                                    book.imagePath,
-                                    width: 120,
-                                    height: 180,
-                                    fit: BoxFit.fill,
-                                  ),
+                      child: favoriteData.favoriteBooks.isEmpty
+                          ? Align(
+                              alignment: Alignment(0, -0.45),
+                              child: Container(
+                                padding: const EdgeInsets.all(20),
+                                decoration: BoxDecoration(
+                                  color:
+                                      const Color.fromARGB(191, 224, 224, 224),
+                                  borderRadius: BorderRadius.circular(20),
                                 ),
-                                const SizedBox(width: 16),
-                                Expanded(
-                                  child: Column(
+                                child: const Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    Icon(
+                                      Icons.error_outline,
+                                      size: 60,
+                                      color: Colors.black54,
+                                    ),
+                                    SizedBox(height: 10),
+                                    Text(
+                                      'No favorite books added yet!',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        color: Colors.black54,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                          : ListView.builder(
+                              itemCount: favoriteData.favoriteBooks.length,
+                              itemBuilder: (context, index) {
+                                final book = favoriteData.favoriteBooks[index];
+
+                                return Container(
+                                  margin:
+                                      const EdgeInsets.symmetric(vertical: 5),
+                                  padding: const EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey[200],
+                                    borderRadius: BorderRadius.circular(20),
+                                  ),
+                                  child: Row(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                        CrossAxisAlignment.center,
                                     children: [
-                                      Text(
-                                        book.title,
-                                        style: const TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black,
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.circular(8),
+                                        child: Image.asset(
+                                          book.imagePath,
+                                          width: 120,
+                                          height: 180,
+                                          fit: BoxFit.fill,
                                         ),
                                       ),
-                                      const SizedBox(height: 8),
-                                      Text(
-                                        book.author,
-                                        style: const TextStyle(
-                                          fontSize: 14,
-                                          color: Colors.black54,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 16),
-                                      Align(
-                                        alignment: Alignment.bottomLeft,
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    Showbook(book: book),
+                                      const SizedBox(width: 16),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              book.title,
+                                              style: const TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.black,
                                               ),
-                                            );
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                            backgroundColor:
-                                                const Color(0xFFA28D4F),
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
                                             ),
-                                            padding: const EdgeInsets.symmetric(
-                                                horizontal: 20, vertical: 8),
-                                          ),
-                                          child: const Text(
-                                            "Show",
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.black,
+                                            const SizedBox(height: 8),
+                                            Text(
+                                              book.author,
+                                              style: const TextStyle(
+                                                fontSize: 14,
+                                                color: Colors.black54,
+                                              ),
                                             ),
-                                          ),
+                                            const SizedBox(height: 16),
+                                            Align(
+                                              alignment: Alignment.bottomLeft,
+                                              child: ElevatedButton(
+                                                onPressed: () {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          Showbook(book: book),
+                                                    ),
+                                                  );
+                                                },
+                                                style: ElevatedButton.styleFrom(
+                                                  backgroundColor:
+                                                      const Color(0xFFA28D4F),
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            12),
+                                                  ),
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      horizontal: 20,
+                                                      vertical: 8),
+                                                ),
+                                                child: const Text(
+                                                  "Show",
+                                                  style: TextStyle(
+                                                    fontSize: 16,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
                                     ],
                                   ),
-                                ),
-                              ],
+                                );
+                              },
                             ),
-                          );
-                        },
-                      ),
                     ),
                   ),
                 ],
