@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ikra/pages/splash.dart';
-import 'package:ikra/pages/view.dart';
 import 'package:provider/provider.dart';
 import 'generated/l10n.dart';
 import 'language_provider.dart';

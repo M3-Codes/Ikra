@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:icons_plus/icons_plus.dart';
 import '../pages/home.dart';
 import '../pages/view.dart';
 
@@ -66,7 +66,7 @@ class Iconbar extends StatelessWidget {
           children: [
             IconButton(
               icon: Icon(
-                Icons.home,
+                Icons.menu_book,
                 color: getIconColor(1),
                 size: 40,
               ),
@@ -76,7 +76,7 @@ class Iconbar extends StatelessWidget {
             ),
             IconButton(
               icon: Icon(
-                Icons.menu_book_sharp,
+                Bootstrap.book_half,
                 color: getIconColor(2),
                 size: 40,
               ),
@@ -86,7 +86,7 @@ class Iconbar extends StatelessWidget {
             ),
             IconButton(
               icon: Icon(
-                Icons.bookmark,
+                Bootstrap.bookmark_heart,
                 color: getIconColor(3),
                 size: 40,
               ),
@@ -96,7 +96,7 @@ class Iconbar extends StatelessWidget {
             ),
             IconButton(
               icon: Icon(
-                Icons.info_outline,
+                Bootstrap.info_circle,
                 color: getIconColor(4),
                 size: 40,
               ),
