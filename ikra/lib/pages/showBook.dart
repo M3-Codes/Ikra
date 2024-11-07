@@ -3,6 +3,7 @@ import 'package:ikra/design/iconbar.dart';
 import 'package:ikra/design/textfont.dart';
 import 'package:provider/provider.dart';
 import '../Db/bookData.dart';
+import '../design/view/apppbar.dart';
 
 class Showbook extends StatefulWidget {
   final Book book;
@@ -31,22 +32,7 @@ class _ShowbookState extends State<Showbook> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF141B24),
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        flexibleSpace: const Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(height: 8),
-              Textdesign(
-                'Recommended Books ',
-                18,
-                color: Colors.white,
-              ),
-            ],
-          ),
-        ),
-      ),
+      appBar: const appbar(isBooksSelected: true),
       body: Stack(
         children: [
           Column(

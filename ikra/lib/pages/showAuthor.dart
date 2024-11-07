@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ikra/design/iconbar.dart';
 import 'package:ikra/Db/bookData.dart';
+import 'package:ikra/design/view/apppbar.dart';
 
 import '../design/textfont.dart';
 
@@ -21,22 +22,7 @@ class _ShowAuthorState extends State<ShowAuthor> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF141B24),
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        flexibleSpace: const Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(height: 8),
-              Textdesign(
-                'Recommended Authors',
-                18,
-                color: Colors.white,
-              ),
-            ],
-          ),
-        ),
-      ),
+      appBar: const appbar(isBooksSelected: false),
       body: Stack(
         children: [
           Column(
