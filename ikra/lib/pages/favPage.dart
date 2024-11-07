@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ikra/Db/bookData.dart';
+import 'package:ikra/design/textfont.dart';
 import 'package:provider/provider.dart';
 import 'package:ikra/pages/showBook.dart';
 import 'package:ikra/design/iconbar.dart';
@@ -12,16 +13,21 @@ class Favpage extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFF141B24),
       appBar: AppBar(
-        backgroundColor: Colors.black87,
+        backgroundColor: Colors.transparent,
         elevation: 0,
-        title: const Text(
-          'MY BOOK SHELF',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 18,
+        flexibleSpace: const Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(height: 8),
+              Textdesign(
+                'My Book Shelf',
+                18,
+                color: Colors.white,
+              ),
+            ],
           ),
         ),
-        centerTitle: true,
       ),
       body: Consumer<FavoriteData>(
         builder: (context, favoriteData, child) {

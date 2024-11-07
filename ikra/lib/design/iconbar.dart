@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-<<<<<<< HEAD
 import 'package:icons_plus/icons_plus.dart';
-=======
 import 'package:ikra/pages/favPage.dart';
-
->>>>>>> 2e8733e662cb09f4dbadc806a3df762d8d4a326c
 import '../pages/home.dart';
 import '../pages/view.dart';
 

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:ikra/design/iconbar.dart';
 import 'package:ikra/Db/bookData.dart';
 
+import '../design/textfont.dart';
+
 class ShowAuthor extends StatefulWidget {
   final Author author;
 
@@ -20,16 +22,20 @@ class _ShowAuthorState extends State<ShowAuthor> {
     return Scaffold(
       backgroundColor: const Color(0xFF141B24),
       appBar: AppBar(
-        backgroundColor: Colors.black87,
-        elevation: 0,
-        title: const Text(
-          'Recommended author',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 18,
+        backgroundColor: Colors.transparent,
+        flexibleSpace: const Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(height: 8),
+              Textdesign(
+                'Recommended Authors',
+                18,
+                color: Colors.white,
+              ),
+            ],
           ),
         ),
-        centerTitle: true,
       ),
       body: Stack(
         children: [
@@ -57,39 +63,31 @@ class _ShowAuthorState extends State<ShowAuthor> {
                         fit: BoxFit.fitHeight,
                       ),
                       const SizedBox(height: 16),
-                      Text(
+                      Textdesign(
                         widget.author.name,
-                        style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        24,
+                        fontWeight: FontWeight.bold,
                       ),
                       const SizedBox(height: 20),
-                      Text(
+                      Textdesign(
                         'Birth Date: ${widget.author.birthDate}',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.grey[700],
-                        ),
+                        16,
+                        color: const Color.fromRGBO(97, 97, 97, 1),
                       ),
                       const SizedBox(height: 4),
-                      Text(
+                      Textdesign(
                         'Nationality: ${widget.author.nationality}',
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.grey[700],
-                        ),
+                        16,
+                        color: const Color.fromRGBO(97, 97, 97, 1),
                       ),
                       const SizedBox(height: 16),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                        child: Text(
+                        child: Textdesign(
                           widget.author.biography,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.grey[800],
-                          ),
+                          align: TextAlign.center,
+                          16,
+                          color: const Color.fromRGBO(66, 66, 66, 1),
                         ),
                       ),
                       const SizedBox(height: 16),

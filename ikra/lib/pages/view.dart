@@ -26,9 +26,10 @@ class _ViewPageState extends State<ViewPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SizedBox(height: 8),
-              Text(
+              Textdesign(
                 'Recommended ${isBooksSelected ? "Books" : "Authors"}',
-                style: const TextStyle(fontSize: 18, color: Colors.white),
+                18,
+                color: Colors.white,
               ),
             ],
           ),
