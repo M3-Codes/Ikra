@@ -56,16 +56,12 @@ class _HomeState extends State<Home> {
       ),
       body: Column(
         children: [
-<<<<<<< HEAD
-          const searchbox(
 
             
-=======
           SearchBox(
             onSuggestionSelected: (suggestion) {
               // Handle suggestion selection
             },
->>>>>>> 3418eade0881061f3b76e6f28a9d36eeb4e46308
           ),
           const SizedBox(
             height: 10,

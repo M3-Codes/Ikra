@@ -4,40 +4,15 @@ import '../../Db/search_provider.dart';
 import '../../pages/showAuthor.dart';
 import '../../pages/showBook.dart';
 
-<<<<<<< HEAD
-class searchbox extends StatelessWidget {
-
-  const searchbox({
-=======
 class SearchBox extends StatefulWidget {
   final ValueChanged<String>? onSuggestionSelected;
 
   const SearchBox({
->>>>>>> 3418eade0881061f3b76e6f28a9d36eeb4e46308
     super.key,
     this.onSuggestionSelected,
   });
 
   @override
-<<<<<<< HEAD
-  Widget build(BuildContext context) {
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24.0),
-      child: TextField(
-        style: const TextStyle(color: Colors.white),
-        decoration: InputDecoration(
-          hintText: '  Search for books...',
-          hintStyle: const TextStyle(color: Colors.grey),
-          suffixIcon: const Icon(Icons.search_rounded, color: Colors.grey),
-          filled: true,
-          fillColor: Colors.white.withOpacity(0.2), // شفافية للخلفية
-          contentPadding:
-              const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(25),
-            borderSide: BorderSide.none,
-=======
   State<SearchBox> createState() => _SearchBoxState();
 }
 
@@ -123,7 +98,6 @@ class _SearchBoxState extends State<SearchBox> {
                 ],
               ),
             ),
->>>>>>> 3418eade0881061f3b76e6f28a9d36eeb4e46308
           ),
         ),
       ),
