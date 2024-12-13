@@ -66,7 +66,7 @@ class Iconbar extends StatelessWidget {
                       onPressed: () {
                         Navigator.of(context).pop(); // إغلاق النافذة
                       },
-                      child: const Text("إغلاق"),
+                      child: const Text("close"),
                     ),
                   ],
                 );
