@@ -26,7 +26,7 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        toolbarHeight: 130,
+        toolbarHeight: 100,
         flexibleSpace: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
