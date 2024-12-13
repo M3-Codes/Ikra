@@ -4,7 +4,6 @@ import 'package:ikra/Db/bookData.dart';
 import 'package:ikra/pages/home.dart';
 import 'package:ikra/pages/splash.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'Db/search_provider.dart';
 import 'generated/l10n.dart';
 import 'language_provider.dart';
@@ -15,26 +14,15 @@ import 'pages/welecome.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // Retrieve the token from SharedPreferences
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String? token = prefs.getString('token');
-   await BookData.initializeData();
-  if(token!=null){
-     List<int> list =await BookData.fetchFavorites();
-      
-        FavoriteData.fillList(list);
-  }
-  // Initialize BookData before running the app
- 
+  // Initialize BookData
+  await BookData.initializeData();
 
-  // Launch the app with the appropriate initial page
-  runApp(MyApp(initialPage: token != null ? const Home() : const Login()));
+  // Run the app with Splash screen as the initial page
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final Widget initialPage;
-
-  const MyApp({super.key, required this.initialPage});
+  const MyApp({super.key});
 
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -63,12 +51,12 @@ class MyApp extends StatelessWidget {
             locale: languageProvider.locale, // Active locale
             navigatorKey: MyApp.navigatorKey,
             debugShowCheckedModeBanner: false,
-            home: initialPage,
+            home: const Splash(), // Set Splash as the initial page
             routes: {
               '/welcome': (context) => const Welcome(),
               '/login': (context) => const Login(),
               '/signup': (context) => const Signup(),
-              '/home': (context) => const Home(), // Added Home route
+              '/home': (context) => const Home(),
             },
           );
         },

@@ -6,16 +6,14 @@ import 'package:ikra/Db/bookData.dart';
 import 'package:ikra/pages/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
-
-
 class SearchService {
-   Future<List<Book>> searchBooks(String inputStr) async {
-    final response = await http.get(Uri.parse('http://10.0.2.2:8000/api/v1/books?title[con]=$inputStr'));
+  Future<List<Book>> searchBooks(String inputStr) async {
+    final response = await http.get(Uri.parse(
+        'https://bca4-85-105-61-128.ngrok-free.app/api/v1/books?title[con]=$inputStr'));
 
     if (response.statusCode == 200) {
       var responseData = jsonDecode(response.body);
-      
+
       if (responseData['data'] is List) {
         return (responseData['data'] as List)
             .map((json) => Book.fromJson(json))
@@ -27,7 +25,6 @@ class SearchService {
       throw Exception('Failed to load books');
     }
   }
- 
 }
 
 
