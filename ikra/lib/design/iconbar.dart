@@ -11,6 +11,7 @@ class Iconbar extends StatelessWidget {
     required this.index,
   });
 
+  void _showdilog() {}
   @override
   Widget build(BuildContext context) {
     // لون الأيقونات حسب الصفحة
@@ -40,8 +41,38 @@ class Iconbar extends StatelessWidget {
             page = const Favpage(); // صفحة المفضلة
             break;
           case 4:
-            page = const Home(); // صفحة حول
-            break;
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: const Text("About us"),
+                  content: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Image.asset(
+                        'images/M3Logo.png', // مسار الصورة
+                        height: 100,
+                        width: 100,
+                      ),
+                      const SizedBox(height: 16), // مسافة بين الصورة والنص
+                      const Text(
+                        "The application was made by the m3code team.",
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).pop(); // إغلاق النافذة
+                      },
+                      child: const Text("إغلاق"),
+                    ),
+                  ],
+                );
+              },
+            ); // صفحة حول
+            return;
           default:
             return; // إذا لم يكن هناك صفحة مقابلة
         }

@@ -1,7 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:ikra/design/welcome_signup_login/BG_w.dart';
 import 'package:ikra/design/welcome_signup_login/logo_ikraW.dart';
@@ -91,7 +89,29 @@ class _SignupState extends State<Signup> {
                             colorbackround: const Color(0xFFA28D4F),
                             colorfont: const Color.fromARGB(255, 255, 255, 255),
                             onPressed: () {
-                              log("e.toString()");
+                              if (formState.currentState!.validate()) {
+                                // عرض Snackbar عند نجاح التسجيل
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text("Registration successful!"),
+                                    duration: Duration(
+                                        seconds: 2), // مدة العرض: ثانيتان
+                                    backgroundColor:
+                                        Color(0xFF141B24), // لون خلفية Snackbar
+                                  ),
+                                );
+                              } else {
+                                // في حالة وجود أخطاء في الحقول
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                        "Please fill in all required fields."),
+                                    duration: Duration(seconds: 2),
+                                    backgroundColor: Color(
+                                        0xFF141B24), // لون خلفية Snackbar للأخطاء
+                                  ),
+                                );
+                              }
                             }),
                         const SizedBox(height: 19),
                         ChangePage(

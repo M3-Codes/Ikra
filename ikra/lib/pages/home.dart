@@ -47,9 +47,13 @@ class _HomeState extends State<Home> {
       ),
       body: Column(
         children: [
-          const searchbox(),
+          SearchBox(
+            onSuggestionSelected: (suggestion) {
+              // Handle suggestion selection
+            },
+          ),
           const SizedBox(
-            height: 32,
+            height: 10,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -66,16 +70,17 @@ class _HomeState extends State<Home> {
                     child: CarouselSlider.builder(
                       itemCount: bookCovers.length,
                       itemBuilder: (context, index, realIndex) {
-                        final String image = (bookCovers[index]);
-                        return bulidImage(image, index);
+                        final String image = bookCovers[index];
+                        return buildImage(image, index);
                       },
                       options: CarouselOptions(
-                          height: 300,
-                          enlargeCenterPage: true,
-                          viewportFraction: 0.6,
-                          enableInfiniteScroll: true,
-                          initialPage: 0,
-                          autoPlay: true),
+                        height: 300,
+                        enlargeCenterPage: true,
+                        viewportFraction: 0.6,
+                        enableInfiniteScroll: true,
+                        initialPage: 0,
+                        autoPlay: true,
+                      ),
                     ),
                   ),
                 ),
@@ -90,7 +95,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget bulidImage(String image, int index) {
+  Widget buildImage(String image, int index) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 8),
       child: Image.asset(

@@ -3,6 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ikra/Db/bookData.dart';
 import 'package:ikra/pages/splash.dart';
 import 'package:provider/provider.dart';
+import 'Db/search_provider.dart';
 import 'generated/l10n.dart';
 import 'language_provider.dart';
 import 'pages/login.dart';
@@ -43,6 +44,7 @@ class _MyAppState extends State<MyApp> {
       providers: [
         ChangeNotifierProvider(create: (_) => FavoriteData()),
         ChangeNotifierProvider(create: (_) => LanguageProvider()),
+        ChangeNotifierProvider(create: (_) => SearchProvider()),
       ],
       child: Consumer<LanguageProvider>(
         builder: (context, languageProvider, child) {
