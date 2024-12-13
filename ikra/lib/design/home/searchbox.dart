@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 
 class searchbox extends StatelessWidget {
+
   const searchbox({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24.0),
       child: TextField(
         style: const TextStyle(color: Colors.white),
         decoration: InputDecoration(
           hintText: '  Search for books...',
-
           hintStyle: const TextStyle(color: Colors.grey),
           suffixIcon: const Icon(Icons.search_rounded, color: Colors.grey),
           filled: true,

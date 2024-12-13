@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:ikra/API/AuthService.dart';
 import 'package:ikra/design/textfont.dart';
 import '../design/home/background box.dart';
 import '../design/home/searchbox.dart';
@@ -24,11 +25,19 @@ class _HomeState extends State<Home> {
     return Scaffold(
       backgroundColor: const Color(0xFF141B24),
       appBar: AppBar(
+        actions: [
+           
+         IconButton(icon: const Icon(Icons.logout_rounded),color: Colors.white, onPressed: () { handleLogout(context) ;},) 
+
+        ],
+         
         backgroundColor: Colors.transparent,
         elevation: 0,
         toolbarHeight: 130,
         flexibleSpace: Center(
+          
           child: Column(
+            
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
@@ -47,7 +56,10 @@ class _HomeState extends State<Home> {
       ),
       body: Column(
         children: [
-          const searchbox(),
+          const searchbox(
+
+            
+          ),
           const SizedBox(
             height: 32,
           ),

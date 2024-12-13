@@ -1,3 +1,4 @@
+
 plugins {
     id "com.android.application"
     id "kotlin-android"
@@ -42,3 +43,16 @@ android {
 flutter {
     source = "../.."
 }
+dependencies {
+    // Google Play Services Auth
+    implementation 'com.google.android.gms:play-services-auth:20.7.0'
+
+
+
+    // Other dependencies (e.g., Flutter, app libraries)
+    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+}
+
+
+

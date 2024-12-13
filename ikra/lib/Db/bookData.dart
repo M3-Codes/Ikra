@@ -1,6 +1,18 @@
+import 'dart:async';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:ikra/API/AuthService.dart';
+
+
+
+
+
+
 
 class Book {
+  final int id;
   final String title;
   final String author;
   final String imagePath;
@@ -10,6 +22,7 @@ class Book {
   bool isFavorite;
 
   Book({
+    required this.id,
     required this.title,
     required this.author,
     required this.imagePath,
@@ -18,9 +31,20 @@ class Book {
     required this.summary,
     this.isFavorite = false,
   });
+  factory Book.fromJson(Map<String,dynamic> json){
+    return Book(
+      id:json['id'],
+    title: json['title'],
+      author:"writer",// json['writersId'].toString(),
+      imagePath: "images/book1.jpg",
+       releaseDate: json['publicationDate'],
+        category: json['category'],
+         summary: json['summary']);
+  }
 }
-
-class Author {
+ 
+ class Author {
+  final int id;
   final String name;
   final String image;
   final String birthDate;
@@ -28,90 +52,172 @@ class Author {
   final String biography;
 
   Author({
+    required this.id,
     required this.name,
     required this.image,
     required this.birthDate,
     required this.nationality,
     required this.biography,
   });
+  factory Author.fromJson(Map<String,dynamic> json){
+    return Author(
+      id:json['id'],
+       name: json['name'],
+      image:"images/author2.png",// json['writersId'].toString(),
+      birthDate: json['birthDate'],
+       nationality: json['nationality'],
+        biography: json['biography']);
+  }
 }
+
+
 
 class BookData {
-  static final List<Book> books = [
-    Book(
-      title: "All Fours",
-      author: "Miranda July",
-      imagePath: "images/book1.jpg",
-      releaseDate: "14/05/2024",
-      category: "Literary Fiction",
-      summary:
-          "The plot of 'All Fours' by Miranda July follows a semi-famous artist who embarks on a spontaneous cross-country road trip from Los Angeles to New York. Along the way, she makes an unexpected stop at a nondescript motel, where she begins a journey of self-discovery and reinvention.",
-    ),
-    Book(
-      title: "The Secret History",
-      author: "Donna Tartt",
-      imagePath: "images/book2.jpg",
-      releaseDate: "16/09/1992",
-      category: "Mystery, Psychological Thriller",
-      summary:
-          "In 'The Secret History,' a group of eccentric and secretive students at an elite college in Vermont become entangled in a murder mystery that tests the boundaries of friendship and morality. Donna Tartt’s novel delves into themes of obsession, guilt, and the human psyche.",
-    ),
-    Book(
-      title: "Buddenbrooks",
-      author: "Thomas Mann",
-      imagePath: "images/book3.jpg",
-      releaseDate: "1901",
-      category: "Historical Fiction",
-      summary:
-          "'Buddenbrooks' is a novel about the decline of a wealthy German merchant family over the course of four generations. Thomas Mann’s exploration of family dynamics, societal changes, and personal aspirations offers a richly detailed view of 19th-century Europe.",
-    ),
-  ];
+   static  List<Book> books = [];
+   static  List<Author> authors = [];
+   
 
-  static final List<Author> authors = [
-    Author(
-      name: "James Patterson",
-      image: "images/author1.png",
-      birthDate: "March 22, 1947",
-      nationality: "American",
-      biography:
-          "James Patterson is an American author and philanthropist known for his thrillers and crime novels. He has authored numerous bestselling books, including the Alex Cross and Women's Murder Club series.",
-    ),
-    Author(
-      name: "Stephen King",
-      image: "images/author2.png",
-      birthDate: "September 21, 1947",
-      nationality: "American",
-      biography:
-          "Stephen King is an American author of horror, supernatural fiction, suspense, and fantasy novels. His books have sold over 350 million copies, many of which have been adapted into films, television series, and miniseries.",
-    ),
-    Author(
-      name: "Chuck Palahniuk",
-      image: "images/author3.png",
-      birthDate: "February 21, 1962",
-      nationality: "American",
-      biography:
-          "Chuck Palahniuk is an American novelist and freelance journalist, known for his transgressive fiction novels. He is the author of 'Fight Club', which was adapted into a popular film in 1999.",
-    ),
-  ];
-}
+  static Future<void> initializeData() async {
+    books = await fetchBooks();
+    authors = await fetchAuthors();
+    //FavoriteData._favoriteBooks = await fetchFavorites();
+  }
 
-class FavoriteData with ChangeNotifier {
-  List<Book> _favoriteBooks = [];
 
-  List<Book> get favoriteBooks => _favoriteBooks;
+  static Future<List<Book>> fetchBooks() async {
+    final response = await http.get(Uri.parse('http://10.0.2.2:8000/api/v1/books'));
 
-  void addFavoriteBook(Book book) {
-    if (!_favoriteBooks.contains(book)) {
-      _favoriteBooks.add(book);
-      book.isFavorite = true;
-      notifyListeners();
+    if (response.statusCode == 200) {
+      var responseData = jsonDecode(response.body);
+      
+      if (responseData['data'] is List) {
+        return (responseData['data'] as List)
+            .map((json) => Book.fromJson(json))
+            .toList();
+      } else {
+        throw Exception('Data is not a list');
+      }
+    } else {
+      throw Exception('Failed to load books');
     }
   }
 
-  void removeFavoriteBook(Book book) {
-    _favoriteBooks.remove(book);
-    book.isFavorite = false;
-    notifyListeners();
+  static Future<List<Author>> fetchAuthors() async {
+    final response = await http.get(Uri.parse('http://10.0.2.2:8000/api/v1/writers'));
+
+    if (response.statusCode == 200) {
+      var responseData = jsonDecode(response.body);
+      
+      if (responseData['data'] is List) {
+        return (responseData['data'] as List)
+            .map((json) => Author.fromJson(json))
+            .toList();
+      } else {
+        throw Exception('Data is not a list');
+      }
+    } else {
+      throw Exception('Failed to load books');
+    }
+  }
+
+static Future<List<int>> fetchFavorites() async {
+   int? id = await TokenStorage.getID() ;
+  
+   print("sdsdssdsdsdskfokewovkovkokvo aaaaaaaaaaaaa${id.toString()}trtr");
+  String url = 'http://10.0.2.2:8000/api/v1/favorites?userId[eq]=$id' ;
+    final response = await http.get(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      var responseData = jsonDecode(response.body);
+      
+      if (responseData['data'] is List) {
+        return (responseData['data'] as List)
+            .map((json) => json['bookId'] as int)
+            .toList();
+      } else {
+        throw Exception('Data is not a list');
+      }
+    } else {
+      throw Exception('Failed to load Favorite');
+    }
+  }
+
+  // static final Future<List<Book>> books = fetchBook();
+
+ 
+}
+
+
+class FavoriteData with ChangeNotifier {
+  static List<Book> _favoriteBooks = [];
+
+  List<Book> get favoriteBooks => _favoriteBooks;
+  static void fillList(List<int> _favorite){
+        _favoriteBooks.clear();
+        for (int bookId in _favorite) {
+            
+                Book book = BookData.books.firstWhere(
+                    (b) => b.id == bookId,
+                    orElse: () => Book(id: -1,isFavorite: false,summary:'' , title: '', author: '', imagePath: '', releaseDate: '', category: ''), // Handle cases where the book isn't found
+                );
+                
+                if (book.id != -1) {
+                  _favoriteBooks.add(book);
+                }
+          }
+  }
+  Future<void> addFavoriteBook(Book book) async {
+    if (!_favoriteBooks.contains(book)) {
+      _favoriteBooks.add(book);
+          try {
+             int? userId = await TokenStorage.getID();
+      final response = await http.post(
+        Uri.parse('http://10.0.2.2:8000/api/createFavorite'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'userId': userId, 'bookId': book.id}),
+      );
+
+      if (response.statusCode == 201) {
+         book.isFavorite = true;
+        notifyListeners();
+      } else {
+        print('Error: ${response.body}');
+      }
+    } catch (e) {
+      print('Exception: $e');
+      return null;
+    }
+      
+    }
+  }
+
+  Future<void> removeFavoriteBook(Book book) async {
+    
+    
+     if (_favoriteBooks.contains(book)) {
+      _favoriteBooks.remove(book);
+      
+          try {
+            int? userId = await TokenStorage.getID();
+      final response = await http.post(
+        Uri.parse('http://10.0.2.2:8000/api/removeFavorite'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode({'userId': userId, 'bookId': book.id}),
+      );
+
+      if (response.statusCode == 200) {
+         book.isFavorite = false;
+        notifyListeners();
+      } else {
+        print('Error: ${response.body}');
+      }
+    } catch (e) {
+      print('Exception: $e');
+      return null;
+    }
+      
+    }
+   
   }
 
   bool isFavorite(Book book) {
