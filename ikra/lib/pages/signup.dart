@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 import 'dart:developer';
+=======
+// ignore_for_file: use_build_context_synchronously
+
+>>>>>>> 3418eade0881061f3b76e6f28a9d36eeb4e46308
 import 'package:flutter/material.dart';
 import 'package:ikra/design/welcome_signup_login/BG_w.dart';
 import 'package:ikra/design/welcome_signup_login/logo_ikraW.dart';
@@ -139,12 +144,44 @@ class _SignupState extends State<Signup> {
                           ],
                         ),
                         ButtonAtuh(
+<<<<<<< HEAD
                           title: "  ${S.of(context).signup}  ",
                           horizontal: 0,
                           colorbackround: const Color(0xFFA28D4F),
                           colorfont: const Color.fromARGB(255, 255, 255, 255),
                           onPressed: _isLoading ? null : handleSignup,
                         ),
+=======
+                            title: "  ${S.of(context).signup}  ",
+                            horizontal: 0,
+                            colorbackround: const Color(0xFFA28D4F),
+                            colorfont: const Color.fromARGB(255, 255, 255, 255),
+                            onPressed: () {
+                              if (formState.currentState!.validate()) {
+                                // عرض Snackbar عند نجاح التسجيل
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text("Registration successful!"),
+                                    duration: Duration(
+                                        seconds: 2), // مدة العرض: ثانيتان
+                                    backgroundColor:
+                                        Color(0xFF141B24), // لون خلفية Snackbar
+                                  ),
+                                );
+                              } else {
+                                // في حالة وجود أخطاء في الحقول
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                        "Please fill in all required fields."),
+                                    duration: Duration(seconds: 2),
+                                    backgroundColor: Color(
+                                        0xFF141B24), // لون خلفية Snackbar للأخطاء
+                                  ),
+                                );
+                              }
+                            }),
+>>>>>>> 3418eade0881061f3b76e6f28a9d36eeb4e46308
                         const SizedBox(height: 19),
                         ChangePage(
                           path: '/login',

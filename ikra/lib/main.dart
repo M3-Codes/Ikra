@@ -4,7 +4,11 @@ import 'package:ikra/Db/bookData.dart';
 import 'package:ikra/pages/home.dart';
 import 'package:ikra/pages/splash.dart';
 import 'package:provider/provider.dart';
+<<<<<<< HEAD
 import 'package:shared_preferences/shared_preferences.dart';
+=======
+import 'Db/search_provider.dart';
+>>>>>>> 3418eade0881061f3b76e6f28a9d36eeb4e46308
 import 'generated/l10n.dart';
 import 'language_provider.dart';
 import 'pages/login.dart';
@@ -43,6 +47,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => FavoriteData()),
         ChangeNotifierProvider(create: (_) => LanguageProvider()),
+        ChangeNotifierProvider(create: (_) => SearchProvider()),
       ],
       child: Consumer<LanguageProvider>(
         builder: (context, languageProvider, child) {
