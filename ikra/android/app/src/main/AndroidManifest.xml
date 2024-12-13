@@ -1,4 +1,8 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.ikra">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:label="ikra"
         android:name="${applicationName}"
@@ -30,6 +34,10 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+
+        <meta-data
+            android:name="com.google.android.gms.client_id"
+            android:value="606334008047-a9s88l8jertscat1gkrm6p7aroe08mc9.apps.googleusercontent.com" />
     </application>
     <!-- Required to query activities that can process text, see:
          https://developer.android.com/training/package-visibility and

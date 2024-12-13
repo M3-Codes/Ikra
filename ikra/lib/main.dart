@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:ikra/Db/bookData.dart';
+import 'package:ikra/pages/home.dart';
 import 'package:ikra/pages/splash.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'Db/search_provider.dart';
 import 'generated/l10n.dart';
 import 'language_provider.dart';
@@ -13,33 +15,31 @@ import 'pages/welecome.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(const MyApp());
+  // Retrieve the token from SharedPreferences
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String? token = prefs.getString('token');
+   await BookData.initializeData();
+  if(token!=null){
+     List<int> list =await BookData.fetchFavorites();
+      
+        FavoriteData.fillList(list);
+  }
+  // Initialize BookData before running the app
+ 
+
+  // Launch the app with the appropriate initial page
+  runApp(MyApp(initialPage: token != null ? const Home() : const Login()));
 }
 
-class MyApp extends StatefulWidget {
-  const MyApp({super.key});
+class MyApp extends StatelessWidget {
+  final Widget initialPage;
+
+  const MyApp({super.key, required this.initialPage});
+
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  final bool _isLoading = false;
-  Locale _locale = const Locale('en');
-  void _setLocale(Locale locale) {
-    setState(() {
-      _locale = locale;
-    });
-  }
-
-  @override
-  @override
   Widget build(BuildContext context) {
-    if (_isLoading) {
-      return const Center(child: CircularProgressIndicator());
-    }
-
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => FavoriteData()),
@@ -49,6 +49,7 @@ class _MyAppState extends State<MyApp> {
       child: Consumer<LanguageProvider>(
         builder: (context, languageProvider, child) {
           return MaterialApp(
+            title: 'Flutter Auth',
             localizationsDelegates: const [
               S.delegate,
               GlobalMaterialLocalizations.delegate,
@@ -62,12 +63,12 @@ class _MyAppState extends State<MyApp> {
             locale: languageProvider.locale, // Active locale
             navigatorKey: MyApp.navigatorKey,
             debugShowCheckedModeBanner: false,
-            home: const Splash(),
+            home: initialPage,
             routes: {
               '/welcome': (context) => const Welcome(),
               '/login': (context) => const Login(),
               '/signup': (context) => const Signup(),
-              // '/homepage': (context) => const HomePage(),
+              '/home': (context) => const Home(), // Added Home route
             },
           );
         },
@@ -75,3 +76,113 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+
+
+
+
+
+
+// import 'package:flutter/material.dart';
+// import 'package:flutter_localizations/flutter_localizations.dart';
+// import 'package:ikra/Db/bookData.dart';
+// import 'package:ikra/pages/home.dart';
+// import 'package:ikra/pages/splash.dart';
+// import 'package:provider/provider.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
+// import 'generated/l10n.dart';
+// import 'language_provider.dart';
+// import 'pages/login.dart';
+// import 'pages/signup.dart';
+// import 'pages/welecome.dart';
+
+
+// void main() async {
+//   WidgetsFlutterBinding.ensureInitialized();
+
+//   // Retrieve the token from SharedPreferences
+//   SharedPreferences prefs = await SharedPreferences.getInstance();
+//   String? token = prefs.getString('token');
+
+//   // Initialize BookData before running the app
+//   await BookData.initializeData();
+
+//   // Launch the app with the appropriate initial page
+//   runApp(MyApp(initialPage: token != null ? const Home() : Login()));
+// }
+
+
+
+// class MyApp extends StatelessWidget {
+//   //const MyApp({super.key});
+
+//    final Widget initialPage;
+
+//  // const MyApp({Key? key, required this.initialPage}) : super(key: key);
+//     const MyApp({super.key, required this.initialPage});
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       title: 'Flutter Auth',
+//       home: initialPage,
+//     );
+//   }
+
+//   static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+
+//   @override
+//   State<MyApp> createState() => _MyAppState();
+// }
+
+
+// class _MyAppState extends State<MyApp> {
+//   final bool _isLoading = false;
+//   Locale _locale = const Locale('en');
+//   void _setLocale(Locale locale) {
+//     setState(() {
+//       _locale = locale;
+//     });
+//   }
+
+//   @override
+//   @override
+//   Widget build(BuildContext context) {
+//     if (_isLoading) {
+//       return const Center(child: CircularProgressIndicator());
+//     }
+
+//     return MultiProvider(
+//       providers: [
+//         ChangeNotifierProvider(create: (_) => FavoriteData()),
+//         ChangeNotifierProvider(create: (_) => LanguageProvider()),
+        
+
+//       ],
+//       child: Consumer<LanguageProvider>(
+//         builder: (context, languageProvider, child) {
+//           return MaterialApp(
+//             localizationsDelegates: const [
+//               S.delegate,
+//               GlobalMaterialLocalizations.delegate,
+//               GlobalWidgetsLocalizations.delegate,
+//               GlobalCupertinoLocalizations.delegate,
+//             ],
+//             supportedLocales: const [
+//               Locale('en', ''), // English
+//               Locale('tr', ''), // Turkish
+//             ],
+//             locale: languageProvider.locale, // Active locale
+//             navigatorKey: MyApp.navigatorKey,
+//             debugShowCheckedModeBanner: false,
+//             home: const Splash(),
+//             routes: {
+//               '/welcome': (context) => const Welcome(),
+//               '/login': (context) => const Login(),
+//               '/signup': (context) => const Signup(),
+//               // '/homepage': (context) => const HomePage(),
+//             },
+//           );
+//         },
+//       ),
+//     );
+//   }
+// }
