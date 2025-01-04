@@ -10,7 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 class AuthService {
-  static const String baseUrl = 'http://10.0.2.2:8000/api';
+  static const String baseUrl = 'https://9cad-85-105-61-128.ngrok-free.app/api';
 
 
    static Future<bool> register(String username, String email, String password) async {
@@ -91,6 +91,10 @@ class TokenStorage {
   }
 
    static Future<void> logout() async {
+     for (var book in BookData.books) {
+            
+              book.isFavorite = false;
+          }
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('token'); // Clear the token on logout
     await prefs.remove('id');
@@ -101,7 +105,7 @@ Future<void> fetchUserProfile() async {
   final token = await TokenStorage.getToken();
 
   final response = await http.get(
-    Uri.parse('http://10.0.2.2:8000/api/user'),
+    Uri.parse('https://9cad-85-105-61-128.ngrok-free.app/api/user'),
     headers: {'Authorization': 'Bearer $token'},
   );
 
@@ -117,7 +121,7 @@ Future<void> fetchUserProfile() async {
 //   final token = await TokenStorage.getToken();
 
 //   final response = await http.get(
-//     Uri.parse('http://10.0.2.2:8000/api/user'),
+//     Uri.parse('https://9cad-85-105-61-128.ngrok-free.app/api/user'),
 //     headers: {'Authorization': 'Bearer $token'},
 //   );
 

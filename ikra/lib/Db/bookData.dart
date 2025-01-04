@@ -8,7 +8,35 @@ import 'package:ikra/API/AuthService.dart';
 
 
 
+class path{
+  final String Url = "https://9cad-85-105-61-128.ngrok-free.app";
+}
+ class Author {
+  final int id;
+  final String name;
+  final String image;
+  final String birthDate;
+  final String nationality;
+  final String biography;
 
+  Author({
+    required this.id,
+    required this.name,
+    required this.image,
+    required this.birthDate,
+    required this.nationality,
+    required this.biography,
+  });
+  factory Author.fromJson(Map<String,dynamic> json){
+    return Author(
+      id:json['id'],
+       name: json['name'],
+      image:"images/author1.png",//json['imagePath']
+      birthDate: json['birthDate'],
+       nationality: json['nationality'],
+        biography: json['biography']);
+  }
+}
 
 
 class Book {
@@ -31,44 +59,34 @@ class Book {
     required this.summary,
     this.isFavorite = false,
   });
-  factory Book.fromJson(Map<String,dynamic> json){
-    return Book(
-      id:json['id'],
+    factory Book.fromJson(Map<String, dynamic> json) {
+ 
+  final author = BookData.authors.firstWhere(
+    (author) => author.id == json['writersId'],
+    orElse: () => Author(
+      id: -1,
+      name: "Unknown Author",
+      image: "",
+      birthDate: "",
+      nationality: "",
+      biography: "",
+    ),
+  );
+
+  return Book(
+    id: json['id'],
     title: json['title'],
-      author:"writer",// json['writersId'].toString(),
-      imagePath: "images/book1.jpg",
-       releaseDate: json['publicationDate'],
-        category: json['category'],
-         summary: json['summary']);
-  }
+    author: author.name, 
+    imagePath: "images/book1.png",//json['imagePath']
+    releaseDate: json['publicationDate'],
+    category: json['category'],
+    summary: json['summary'],
+  );
+}
+
+  
 }
  
- class Author {
-  final int id;
-  final String name;
-  final String image;
-  final String birthDate;
-  final String nationality;
-  final String biography;
-
-  Author({
-    required this.id,
-    required this.name,
-    required this.image,
-    required this.birthDate,
-    required this.nationality,
-    required this.biography,
-  });
-  factory Author.fromJson(Map<String,dynamic> json){
-    return Author(
-      id:json['id'],
-       name: json['name'],
-      image:"images/author2.png",// json['writersId'].toString(),
-      birthDate: json['birthDate'],
-       nationality: json['nationality'],
-        biography: json['biography']);
-  }
-}
 
 
 
@@ -78,14 +96,15 @@ class BookData {
    
 
   static Future<void> initializeData() async {
-    books = await fetchBooks();
     authors = await fetchAuthors();
+    books = await fetchBooks();
+    
     //FavoriteData._favoriteBooks = await fetchFavorites();
   }
 
 
   static Future<List<Book>> fetchBooks() async {
-    final response = await http.get(Uri.parse('http://10.0.2.2:8000/api/v1/books'));
+    final response = await http.get(Uri.parse('https://9cad-85-105-61-128.ngrok-free.app/api/v1/books'));
 
     if (response.statusCode == 200) {
       var responseData = jsonDecode(response.body);
@@ -103,7 +122,7 @@ class BookData {
   }
 
   static Future<List<Author>> fetchAuthors() async {
-    final response = await http.get(Uri.parse('http://10.0.2.2:8000/api/v1/writers'));
+    final response = await http.get(Uri.parse('https://9cad-85-105-61-128.ngrok-free.app/api/v1/writers'));
 
     if (response.statusCode == 200) {
       var responseData = jsonDecode(response.body);
@@ -124,7 +143,7 @@ static Future<List<int>> fetchFavorites() async {
    int? id = await TokenStorage.getID() ;
   
    print("sdsdssdsdsdskfokewovkovkokvo aaaaaaaaaaaaa${id.toString()}trtr");
-  String url = 'http://10.0.2.2:8000/api/v1/favorites?userId[eq]=$id' ;
+  String url = 'https://9cad-85-105-61-128.ngrok-free.app/api/v1/favorites?userId[eq]=$id' ;
     final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
@@ -153,7 +172,7 @@ class FavoriteData with ChangeNotifier {
 
   List<Book> get favoriteBooks => _favoriteBooks;
   static void fillList(List<int> _favorite){
-        _favoriteBooks.clear();
+        _favoriteBooks=[];
         for (int bookId in _favorite) {
             
                 Book book = BookData.books.firstWhere(
@@ -165,6 +184,7 @@ class FavoriteData with ChangeNotifier {
                   _favoriteBooks.add(book);
                 }
           }
+          print(_favoriteBooks.length);
   }
   Future<void> addFavoriteBook(Book book) async {
     if (!_favoriteBooks.contains(book)) {
@@ -172,7 +192,7 @@ class FavoriteData with ChangeNotifier {
           try {
              int? userId = await TokenStorage.getID();
       final response = await http.post(
-        Uri.parse('http://10.0.2.2:8000/api/createFavorite'),
+        Uri.parse('https://9cad-85-105-61-128.ngrok-free.app/api/createFavorite'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'userId': userId, 'bookId': book.id}),
       );
@@ -200,12 +220,12 @@ class FavoriteData with ChangeNotifier {
           try {
             int? userId = await TokenStorage.getID();
       final response = await http.post(
-        Uri.parse('http://10.0.2.2:8000/api/removeFavorite'),
+        Uri.parse('https://9cad-85-105-61-128.ngrok-free.app/api/removeFavorite'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'userId': userId, 'bookId': book.id}),
       );
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
          book.isFavorite = false;
         notifyListeners();
       } else {

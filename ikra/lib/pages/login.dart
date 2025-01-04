@@ -81,7 +81,7 @@ class _LoginState extends State<Login> {
      
       // أرسل Google Token إلى API Laravel
       final response = await http.post(
-        Uri.parse('http://10.0.2.2:8000/api/login/google'),
+        Uri.parse('https://9cad-85-105-61-128.ngrok-free.app/api/login/google'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'token': googleAuth.idToken}),
       );
