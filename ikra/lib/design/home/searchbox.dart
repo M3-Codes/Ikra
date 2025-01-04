@@ -24,7 +24,7 @@ class _SearchBoxState extends State<SearchBox> {
   @override
   void dispose() {
     _controller.dispose();
-    _focusNode.dispose(); // تخلص من الـ FocusNode عند الانتهاء
+    _focusNode.dispose(); // تخلص من FocusNode عند الانتهاء
     _removeOverlay();
     super.dispose();
   }
@@ -43,6 +43,7 @@ class _SearchBoxState extends State<SearchBox> {
         top: MediaQuery.of(context).size.height * 0.23, // تحديد موقع القائمة
         left: 24,
         right: 24,
+
         child: Material(
           color: Colors.transparent,
           child: Container(
@@ -66,7 +67,6 @@ class _SearchBoxState extends State<SearchBox> {
                         ),
                         onTap: () {
                           _removeOverlay();
-                          widget.onSuggestionSelected?.call(book.title);
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -86,7 +86,6 @@ class _SearchBoxState extends State<SearchBox> {
                         ),
                         onTap: () {
                           _removeOverlay();
-                          widget.onSuggestionSelected?.call(author.name);
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -159,7 +158,7 @@ class _SearchBoxState extends State<SearchBox> {
     super.initState();
     _focusNode.addListener(() {
       if (!_focusNode.hasFocus) {
-        // إذا فقد مربع النص التركيز، قم بإزالة القائمة
+        // إذا فقد مربع النص التركيز (عند إغلاق الكيبورد)، قم بإزالة القائمة
         _removeOverlay();
       }
     });

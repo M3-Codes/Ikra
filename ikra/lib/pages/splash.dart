@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
@@ -12,10 +13,26 @@ class _SplashState extends State<Splash> {
   @override
   void initState() {
     super.initState();
-    // الانتقال إلى صفحة تسجيل الدخول بعد ثلاث ثوانٍ
-    Future.delayed(const Duration(seconds: 6), () {
-      Navigator.of(context).pushReplacementNamed('/welcome');
-    });
+    _checkTokenAndNavigate();
+  }
+
+  Future<void> _checkTokenAndNavigate() async {
+    // الانتظار لمدة 6 ثوانٍ لإظهار شاشة التحميل
+    await Future.delayed(const Duration(seconds: 6));
+
+    // التحقق من وجود التوكن
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+
+    if (token != null) {
+      // إذا كان التوكن موجودًا، الانتقال إلى صفحة الرئيسية
+      // ignore: use_build_context_synchronously
+      Navigator.of(context).pushReplacementNamed('/home');
+    } else {
+      // إذا لم يكن التوكن موجودًا، الانتقال إلى صفحة تسجيل الدخول
+      // ignore: use_build_context_synchronously
+      Navigator.of(context).pushReplacementNamed('/login');
+    }
   }
 
   @override

@@ -6,14 +6,11 @@ import 'package:ikra/Db/bookData.dart';
 import 'package:ikra/pages/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
-
-
 class AuthService {
-  static const String baseUrl = 'http://10.0.2.2:8000/api';
+  static const String baseUrl = 'https://f4f0-85-105-61-128.ngrok-free.app/api';
 
-
-   static Future<bool> register(String username, String email, String password) async {
+  static Future<bool> register(
+      String username, String email, String password) async {
     try {
       // Prepare the API request
       final response = await http.post(
@@ -53,11 +50,9 @@ class AuthService {
         var data = jsonDecode(response.body);
         String token = data['token'];
         int ID = data['id'];
-        
-       TokenStorage.saveToken(token,ID);
-        return token; // ارجع التوكن
 
-         
+        TokenStorage.saveToken(token, ID);
+        return token; // ارجع التوكن
       } else {
         print('Error: ${response.body}');
         return null;
@@ -69,28 +64,26 @@ class AuthService {
   }
 }
 
-
-  
 class TokenStorage {
-  static Future<void> saveToken(String token,int id) async {
+  static Future<void> saveToken(String token, int id) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('token', token);
     await prefs.setInt('id', id);
-      List<int> list =await BookData.fetchFavorites();
-        FavoriteData.fillList(list);
-
+    List<int> list = await BookData.fetchFavorites();
+    FavoriteData.fillList(list);
   }
 
   static Future<String?> getToken() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString('token');
   }
+
   static Future<int?> getID() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getInt('id');
   }
 
-   static Future<void> logout() async {
+  static Future<void> logout() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove('token'); // Clear the token on logout
     await prefs.remove('id');
@@ -101,7 +94,7 @@ Future<void> fetchUserProfile() async {
   final token = await TokenStorage.getToken();
 
   final response = await http.get(
-    Uri.parse('http://10.0.2.2:8000/api/user'),
+    Uri.parse('https://f4f0-85-105-61-128.ngrok-free.app/api/user'),
     headers: {'Authorization': 'Bearer $token'},
   );
 
@@ -117,7 +110,7 @@ Future<void> fetchUserProfile() async {
 //   fi
 
 //   final response = await http.get(
-//     Uri.parse('http://10.0.2.2:8000/api/user'),
+//     Uri.parse('https://f4f0-85-105-61-128.ngrok-free.app/api/user'),
 //     headers: {'Authorization': 'Bearer $token'},
 //   );
 
@@ -131,12 +124,39 @@ Future<void> fetchUserProfile() async {
 // }
 
 void handleLogout(BuildContext context) async {
-  await TokenStorage.logout(); // Clear the token
-  Navigator.pushAndRemoveUntil(
-    context,
-    MaterialPageRoute(builder: (context) => const Login()),
-    (route) => false,
-  );
+  bool shouldLogout = await showDialog<bool>(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Confirm logout'),
+            content: const Text('Do you want to log out?'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(false); // لا تسجل الخروج
+                },
+                child: const Text('Cancel'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(true); // أكد تسجيل الخروج
+                },
+                child: const Text("Log out"),
+              ),
+            ],
+          );
+        },
+      ) ??
+      false; // القيمة الافتراضية إذا أُغلِقت النافذة بدون اختيار
+
+  if (shouldLogout) {
+    await TokenStorage.logout(); // تنظيف الرمز
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => const Login()),
+      (route) => false,
+    );
+  }
 }
 
 

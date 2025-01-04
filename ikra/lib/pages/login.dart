@@ -30,11 +30,12 @@ class _LoginState extends State<Login> {
   final TextEditingController password = TextEditingController();
   final GlobalKey<FormState> formState = GlobalKey<FormState>();
   final GoogleSignIn _googleSignIn = GoogleSignIn(
-  clientId: "606334008047-a9s88l8jertscat1gkrm6p7aroe08mc9.apps.googleusercontent.com",
-  scopes: ['email'],
-  hostedDomain: "",
-  signInOption: SignInOption.standard,
-);
+    clientId:
+        "606334008047-a9s88l8jertscat1gkrm6p7aroe08mc9.apps.googleusercontent.com",
+    scopes: ['email'],
+    hostedDomain: "",
+    signInOption: SignInOption.standard,
+  );
   bool _loading = false; // Fixed: Changed from `final` to `bool`
 
   // Handle Login Method
@@ -46,10 +47,10 @@ class _LoginState extends State<Login> {
     });
 
     try {
-      String? token = await AuthService.login(email.text.trim(), password.text.trim());
-     
+      String? token =
+          await AuthService.login(email.text.trim(), password.text.trim());
+
       if (token != null) {
-      
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => const Home()),
@@ -66,7 +67,7 @@ class _LoginState extends State<Login> {
     }
   }
 
-   Future<void> loginWithGoogle() async {
+  Future<void> loginWithGoogle() async {
     await _googleSignIn.signOut();
     try {
       final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
@@ -78,10 +79,10 @@ class _LoginState extends State<Login> {
 
       final GoogleSignInAuthentication googleAuth =
           await googleUser.authentication;
-     
+
       // أرسل Google Token إلى API Laravel
       final response = await http.post(
-        Uri.parse('http://10.0.2.2:8000/api/login/google'),
+        Uri.parse('https://f4f0-85-105-61-128.ngrok-free.app/api/login/google'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'token': googleAuth.idToken}),
       );
@@ -91,10 +92,10 @@ class _LoginState extends State<Login> {
         print(data);
         // احفظ Token المستخدم في SharedPreferences
         String userToken = data['token'];
-       
-       int userID = data['user']['id'];
-        
-        TokenStorage.saveToken(userToken,userID);
+
+        int userID = data['user']['id'];
+
+        TokenStorage.saveToken(userToken, userID);
         // مثال على حفظه:
         // SharedPreferences prefs = await SharedPreferences.getInstance();
         // await prefs.setString('userToken', userToken);
@@ -192,7 +193,8 @@ class _LoginState extends State<Login> {
                             horizontal: 0,
                             colorbackround: const Color(0xFFA28D4F),
                             colorfont: const Color.fromARGB(255, 255, 255, 255),
-                            onPressed: handleLogin, // Use the handleLogin method
+                            onPressed:
+                                handleLogin, // Use the handleLogin method
                           ),
                           const SizedBox(height: 14),
                           const Column(children: [Divider_login()]),
@@ -203,12 +205,15 @@ class _LoginState extends State<Login> {
                               loginWithGoogle();
                             },
                             style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all(const Color(0xFFA28D4F)),
+                              backgroundColor: MaterialStateProperty.all(
+                                  const Color(0xFFA28D4F)),
                               padding: MaterialStateProperty.all(
-                                const EdgeInsets.symmetric(horizontal: 155, vertical: 10),
+                                const EdgeInsets.symmetric(
+                                    horizontal: 155, vertical: 10),
                               ),
                               shape: MaterialStateProperty.all(
-                                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15)),
                               ),
                             ),
                             child: Image.asset("images/google.png", width: 30),
