@@ -89,8 +89,8 @@ class BookData {
   }
 
   static Future<List<Book>> fetchBooks() async {
-    final response = await http.get(
-        Uri.parse('https://f4f0-85-105-61-128.ngrok-free.app/api/v1/books'));
+    final response =
+        await http.get(Uri.parse('http://10.0.2.2:8000/api/v1/books'));
 
     if (response.statusCode == 200) {
       var responseData = jsonDecode(response.body);
@@ -108,8 +108,8 @@ class BookData {
   }
 
   static Future<List<Author>> fetchAuthors() async {
-    final response = await http.get(
-        Uri.parse('https://f4f0-85-105-61-128.ngrok-free.app/api/v1/writers'));
+    final response =
+        await http.get(Uri.parse('http://10.0.2.2:8000/api/v1/writers'));
 
     if (response.statusCode == 200) {
       var responseData = jsonDecode(response.body);
@@ -130,8 +130,7 @@ class BookData {
     int? id = await TokenStorage.getID();
 
     print("sdsdssdsdsdskfokewovkovkokvo aaaaaaaaaaaaa${id.toString()}trtr");
-    String url =
-        'https://f4f0-85-105-61-128.ngrok-free.app/api/v1/favorites?userId[eq]=$id';
+    String url = 'http://10.0.2.2:8000/api/v1/favorites?userId[eq]=$id';
     final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
@@ -185,8 +184,7 @@ class FavoriteData with ChangeNotifier {
       try {
         int? userId = await TokenStorage.getID();
         final response = await http.post(
-          Uri.parse(
-              'https://f4f0-85-105-61-128.ngrok-free.app/api/createFavorite'),
+          Uri.parse('http://10.0.2.2:8000/api/createFavorite'),
           headers: {'Content-Type': 'application/json'},
           body: jsonEncode({'userId': userId, 'bookId': book.id}),
         );
@@ -211,8 +209,7 @@ class FavoriteData with ChangeNotifier {
       try {
         int? userId = await TokenStorage.getID();
         final response = await http.post(
-          Uri.parse(
-              'https://f4f0-85-105-61-128.ngrok-free.app/api/removeFavorite'),
+          Uri.parse('http://10.0.2.2:8000/api/removeFavorite'),
           headers: {'Content-Type': 'application/json'},
           body: jsonEncode({'userId': userId, 'bookId': book.id}),
         );

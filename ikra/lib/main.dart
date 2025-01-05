@@ -15,7 +15,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Initialize BookData
-  await BookData.initializeData();
+  //await BookData.initializeData();
 
   // Run the app with Splash screen as the initial page
   runApp(const MyApp());

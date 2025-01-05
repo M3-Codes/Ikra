@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../Db/bookData.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});
@@ -10,28 +11,45 @@ class Splash extends StatefulWidget {
 }
 
 class _SplashState extends State<Splash> {
+  bool _isLoading = true;
+  bool _isError = false;
+
   @override
   void initState() {
     super.initState();
-    _checkTokenAndNavigate();
+    _initializeApp();
   }
 
-  Future<void> _checkTokenAndNavigate() async {
-    // الانتظار لمدة 6 ثوانٍ لإظهار شاشة التحميل
-    await Future.delayed(const Duration(seconds: 6));
+  Future<void> _initializeApp() async {
+    try {
+      if (mounted) {
+        setState(() {
+          _isLoading = true;
+          _isError = false;
+        });
+      }
 
-    // التحقق من وجود التوكن
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString('token');
+      await Future.delayed(const Duration(seconds: 3));
 
-    if (token != null) {
-      // إذا كان التوكن موجودًا، الانتقال إلى صفحة الرئيسية
-      // ignore: use_build_context_synchronously
-      Navigator.of(context).pushReplacementNamed('/home');
-    } else {
-      // إذا لم يكن التوكن موجودًا، الانتقال إلى صفحة تسجيل الدخول
-      // ignore: use_build_context_synchronously
-      Navigator.of(context).pushReplacementNamed('/login');
+      await BookData.initializeData();
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String? token = prefs.getString('token');
+
+      if (mounted) {
+        if (token != null) {
+          Navigator.of(context).pushReplacementNamed('/home');
+        } else {
+          Navigator.of(context).pushReplacementNamed('/welcome');
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+          _isError = true;
+        });
+      }
     }
   }
 
@@ -39,15 +57,33 @@ class _SplashState extends State<Splash> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF141B24),
-      body: Column(
-        children: [
-          Expanded(
-            child: Lottie.asset(
-              'images/bookAnime6.json',
-              fit: BoxFit.contain, // سيضمن احتواء الرسوم المتحركة بالكامل
-            ),
-          ),
-        ],
+      body: Center(
+        child: _isLoading
+            ? Lottie.asset(
+                'images/bookAnime6.json',
+                fit: BoxFit.contain,
+              )
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.error, color: Colors.red, size: 80),
+                  const SizedBox(height: 16),
+                  const Text(
+                    'An error occurred during initialization. Please try again.',
+                    style: TextStyle(color: Colors.white, fontSize: 18),
+                  ),
+                  const SizedBox(height: 16),
+                  ElevatedButton(
+                    onPressed: () {
+                      // إعادة تحميل شاشة Splash
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(builder: (context) => const Splash()),
+                      );
+                    },
+                    child: const Text('Retry'),
+                  ),
+                ],
+              ),
       ),
     );
   }
