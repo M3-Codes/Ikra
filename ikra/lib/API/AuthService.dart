@@ -7,7 +7,7 @@ import 'package:ikra/pages/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
-  static const String baseUrl = 'https://f4f0-85-105-61-128.ngrok-free.app/api';
+  static const String baseUrl = 'https://b439-85-105-61-128.ngrok-free.app/api';
 
   static Future<bool> register(
       String username, String email, String password) async {
@@ -94,7 +94,7 @@ Future<void> fetchUserProfile() async {
   final token = await TokenStorage.getToken();
 
   final response = await http.get(
-    Uri.parse('https://f4f0-85-105-61-128.ngrok-free.app/api/user'),
+    Uri.parse('https://b439-85-105-61-128.ngrok-free.app/api/user'),
     headers: {'Authorization': 'Bearer $token'},
   );
 
@@ -110,7 +110,7 @@ Future<void> fetchUserProfile() async {
 //   final token = await TokenStorage.getToken();
 
 //   final response = await http.get(
-//     Uri.parse('https://f4f0-85-105-61-128.ngrok-free.app/api/user'),
+//     Uri.parse('https://b439-85-105-61-128.ngrok-free.app/api/user'),
 //     headers: {'Authorization': 'Bearer $token'},
 //   );
 

@@ -90,7 +90,7 @@ class BookData {
 
   static Future<List<Book>> fetchBooks() async {
     final response = await http.get(
-        Uri.parse('https://f4f0-85-105-61-128.ngrok-free.app/api/v1/books'));
+        Uri.parse('https://b439-85-105-61-128.ngrok-free.app/api/v1/books'));
 
     if (response.statusCode == 200) {
       var responseData = jsonDecode(response.body);
@@ -109,7 +109,7 @@ class BookData {
 
   static Future<List<Author>> fetchAuthors() async {
     final response = await http.get(
-        Uri.parse('https://f4f0-85-105-61-128.ngrok-free.app/api/v1/writers'));
+        Uri.parse('https://b439-85-105-61-128.ngrok-free.app/api/v1/writers'));
 
     if (response.statusCode == 200) {
       var responseData = jsonDecode(response.body);
@@ -131,7 +131,7 @@ class BookData {
 
     print("sdsdssdsdsdskfokewovkovkokvo aaaaaaaaaaaaa${id.toString()}trtr");
     String url =
-        'https://f4f0-85-105-61-128.ngrok-free.app/api/v1/favorites?userId[eq]=$id';
+        'https://b439-85-105-61-128.ngrok-free.app/api/v1/favorites?userId[eq]=$id';
     final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
@@ -186,7 +186,7 @@ class FavoriteData with ChangeNotifier {
         int? userId = await TokenStorage.getID();
         final response = await http.post(
           Uri.parse(
-              'https://f4f0-85-105-61-128.ngrok-free.app/api/createFavorite'),
+              'https://b439-85-105-61-128.ngrok-free.app/api/createFavorite'),
           headers: {'Content-Type': 'application/json'},
           body: jsonEncode({'userId': userId, 'bookId': book.id}),
         );
@@ -212,7 +212,7 @@ class FavoriteData with ChangeNotifier {
         int? userId = await TokenStorage.getID();
         final response = await http.post(
           Uri.parse(
-              'https://f4f0-85-105-61-128.ngrok-free.app/api/removeFavorite'),
+              'https://b439-85-105-61-128.ngrok-free.app/api/removeFavorite'),
           headers: {'Content-Type': 'application/json'},
           body: jsonEncode({'userId': userId, 'bookId': book.id}),
         );
