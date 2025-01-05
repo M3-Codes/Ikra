@@ -31,7 +31,11 @@ class _LoginState extends State<Login> {
   final GlobalKey<FormState> formState = GlobalKey<FormState>();
   final GoogleSignIn _googleSignIn = GoogleSignIn(
     clientId:
+<<<<<<< HEAD
         "1014988876473-1pekvuemj1m69uaheekeqoubvbmqkoto.apps.googleusercontent.com",
+=======
+        "696375870880-pglf2pkruffre7eoepm2l17oc4ce5jsa.apps.googleusercontent.com",
+>>>>>>> ca2ad014058ebe99a4642d81cd4ea6f5c2ca37fb
     scopes: ['email'],
     hostedDomain: "",
     signInOption: SignInOption.standard,
@@ -82,7 +86,11 @@ class _LoginState extends State<Login> {
 
       // أرسل Google Token إلى API Laravel
       final response = await http.post(
+<<<<<<< HEAD
         Uri.parse('http://10.0.2.2:8000/api/login/google'),
+=======
+        Uri.parse('https://b439-85-105-61-128.ngrok-free.app/api/login/google'),
+>>>>>>> ca2ad014058ebe99a4642d81cd4ea6f5c2ca37fb
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'token': googleAuth.idToken}),
       );

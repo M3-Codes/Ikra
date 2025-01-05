@@ -89,8 +89,13 @@ class BookData {
   }
 
   static Future<List<Book>> fetchBooks() async {
+<<<<<<< HEAD
     final response =
         await http.get(Uri.parse('http://10.0.2.2:8000/api/v1/books'));
+=======
+    final response = await http.get(
+        Uri.parse('https://b439-85-105-61-128.ngrok-free.app/api/v1/books'));
+>>>>>>> ca2ad014058ebe99a4642d81cd4ea6f5c2ca37fb
 
     if (response.statusCode == 200) {
       var responseData = jsonDecode(response.body);
@@ -108,8 +113,13 @@ class BookData {
   }
 
   static Future<List<Author>> fetchAuthors() async {
+<<<<<<< HEAD
     final response =
         await http.get(Uri.parse('http://10.0.2.2:8000/api/v1/writers'));
+=======
+    final response = await http.get(
+        Uri.parse('https://b439-85-105-61-128.ngrok-free.app/api/v1/writers'));
+>>>>>>> ca2ad014058ebe99a4642d81cd4ea6f5c2ca37fb
 
     if (response.statusCode == 200) {
       var responseData = jsonDecode(response.body);
@@ -130,7 +140,12 @@ class BookData {
     int? id = await TokenStorage.getID();
 
     print("sdsdssdsdsdskfokewovkovkokvo aaaaaaaaaaaaa${id.toString()}trtr");
+<<<<<<< HEAD
     String url = 'http://10.0.2.2:8000/api/v1/favorites?userId[eq]=$id';
+=======
+    String url =
+        'https://b439-85-105-61-128.ngrok-free.app/api/v1/favorites?userId[eq]=$id';
+>>>>>>> ca2ad014058ebe99a4642d81cd4ea6f5c2ca37fb
     final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
@@ -184,7 +199,12 @@ class FavoriteData with ChangeNotifier {
       try {
         int? userId = await TokenStorage.getID();
         final response = await http.post(
+<<<<<<< HEAD
           Uri.parse('http://10.0.2.2:8000/api/createFavorite'),
+=======
+          Uri.parse(
+              'https://b439-85-105-61-128.ngrok-free.app/api/createFavorite'),
+>>>>>>> ca2ad014058ebe99a4642d81cd4ea6f5c2ca37fb
           headers: {'Content-Type': 'application/json'},
           body: jsonEncode({'userId': userId, 'bookId': book.id}),
         );
@@ -209,7 +229,12 @@ class FavoriteData with ChangeNotifier {
       try {
         int? userId = await TokenStorage.getID();
         final response = await http.post(
+<<<<<<< HEAD
           Uri.parse('http://10.0.2.2:8000/api/removeFavorite'),
+=======
+          Uri.parse(
+              'https://b439-85-105-61-128.ngrok-free.app/api/removeFavorite'),
+>>>>>>> ca2ad014058ebe99a4642d81cd4ea6f5c2ca37fb
           headers: {'Content-Type': 'application/json'},
           body: jsonEncode({'userId': userId, 'bookId': book.id}),
         );

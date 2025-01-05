@@ -8,8 +8,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SearchService {
   Future<List<Book>> searchBooks(String inputStr) async {
+<<<<<<< HEAD
     final response = await http.get(
         Uri.parse('http://10.0.2.2:8000/api/v1/books?title[con]=$inputStr'));
+=======
+    final response = await http.get(Uri.parse(
+        'https://b439-85-105-61-128.ngrok-free.app/api/v1/books?title[con]=$inputStr'));
+>>>>>>> ca2ad014058ebe99a4642d81cd4ea6f5c2ca37fb
 
     if (response.statusCode == 200) {
       var responseData = jsonDecode(response.body);
